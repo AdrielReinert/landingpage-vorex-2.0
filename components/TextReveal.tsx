@@ -48,7 +48,8 @@ export const TextReveal: React.FC<TextRevealProps> = ({ children, className = ""
       style={{ display: "flex", flexWrap: "wrap" }}
       variants={container}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.6 }}
       className={className}
     >
       {words.map((word, index) => (
