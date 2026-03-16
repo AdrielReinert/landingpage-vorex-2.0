@@ -20,9 +20,19 @@ export const ScrollProgress: React.FC = () => {
 
 export const BackToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [lastScrollAt, setLastScrollAt] = useState(0);
 
   useEffect(() => {
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
     const toggleVisibility = () => {
+      setLastScrollAt(Date.now());
+      setIsScrolling(true);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => setIsScrolling(false), 180);
+
       if (window.scrollY > 500) {
         setIsVisible(true);
       } else {
@@ -30,10 +40,17 @@ export const BackToTop: React.FC = () => {
       }
     };
     window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    return () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      window.removeEventListener('scroll', toggleVisibility);
+    };
   }, []);
 
   const scrollToTop = () => {
+    // Prevent accidental taps while user is still performing a scroll gesture.
+    if (Date.now() - lastScrollAt < 250) return;
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -46,7 +63,8 @@ export const BackToTop: React.FC = () => {
       animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.5 }}
       transition={{ duration: 0.3 }}
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 z-40 p-3 rounded-full bg-zinc-800/80 backdrop-blur-md border border-white/10 text-white shadow-lg hover:bg-yellow-500 hover:border-yellow-500 transition-all group ${!isVisible ? 'pointer-events-none' : 'pointer-events-auto'}`}
+      className={`fixed bottom-8 right-8 z-40 p-3 rounded-full bg-zinc-800/80 backdrop-blur-md border border-white/10 text-white shadow-lg hover:bg-yellow-500 hover:border-yellow-500 transition-all group ${!isVisible || isScrolling ? 'pointer-events-none' : 'pointer-events-auto'}`}
+      aria-label="Voltar ao topo"
     >
       <ArrowUp size={20} className="group-hover:-translate-y-1 transition-transform" />
     </motion.button>

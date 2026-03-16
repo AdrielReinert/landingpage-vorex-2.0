@@ -1,23 +1,11 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
 const PlatformPreview: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Animation values based on scroll position
-  const scale = useTransform(scrollYProgress, [0.1, 0.5], [0.8, 1.1]);
-  const rotateX = useTransform(scrollYProgress, [0.1, 0.5], [20, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
-
   return (
-    <section ref={containerRef} className="py-20 bg-black relative flex flex-col items-center perspective-1000">
+    <section className="py-20 md:py-28 bg-black relative flex flex-col items-center overflow-hidden">
       <div className="max-w-[980px] w-full px-6 z-10">
         
         <div className="mb-8 text-center flex flex-col items-center">
@@ -33,22 +21,19 @@ const PlatformPreview: React.FC = () => {
       </div>
 
       <motion.div
-         style={{ 
-           scale, 
-           rotateX,
-           opacity,
-           y,
-           transformPerspective: 1000,
-           willChange: "transform, opacity"
-         }}
+         initial={{ opacity: 1, y: 0, scale: 1 }}
+         whileInView={{ opacity: 1, y: 0, scale: 1 }}
+         viewport={{ once: true, amount: 0.2 }}
+         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+         style={{ willChange: "transform, opacity" }}
          className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8"
       >
            {/* Placeholder for a high-end UI shot */}
-           <div className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden flex items-center justify-center relative group border-[6px] md:border-[8px] border-zinc-800">
+           <div className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 aspect-[9/19.5] max-h-[680px]">
               <img 
                 src="https://i.postimg.cc/sX2YFcqH/Screen-Recording-03-16-2026-13-49-06-1.gif" 
                 alt="Interface da Plataforma Vorex" 
-                className="w-full h-auto"
+                className="absolute inset-0 w-full h-full object-cover object-top"
                 referrerPolicy="no-referrer"
               />
               

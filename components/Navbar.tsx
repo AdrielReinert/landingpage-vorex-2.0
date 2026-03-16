@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 
 const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
@@ -20,14 +20,14 @@ const Navbar: React.FC = () => {
       <div className="max-w-[980px] mx-auto px-4 h-full flex items-center justify-between">
         
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-2 opacity-90">
           <img 
             src="https://i.postimg.cc/3rzwdNMK/Vorex-Igaming-Branco.png" 
             alt="Vorex Logo" 
             className="h-6 w-auto"
             referrerPolicy="no-referrer"
           />
-        </a>
+        </div>
 
         {/* Links - Apple Style (Hidden on mobile usually, but keeping simple here) */}
         <div className="hidden md:flex items-center gap-8 text-xs font-medium text-gray-300">
