@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
 const PlatformPreview: React.FC = () => {
+  const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
+
   return (
     <section className="py-20 md:py-28 bg-black relative flex flex-col items-center overflow-hidden">
       <div className="max-w-[980px] w-full px-6 z-10">
@@ -29,11 +31,20 @@ const PlatformPreview: React.FC = () => {
          className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8"
       >
            {/* Placeholder for a high-end UI shot */}
-           <div className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 aspect-[9/19.5] max-h-[680px]">
+           <div
+             className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
+             style={{ aspectRatio: frameAspectRatio }}
+           >
               <img 
                 src="https://i.postimg.cc/sX2YFcqH/Screen-Recording-03-16-2026-13-49-06-1.gif" 
                 alt="Interface da Plataforma Vorex" 
                 className="absolute inset-0 w-full h-full object-contain object-center bg-black"
+                onLoad={(event) => {
+                  const { naturalWidth, naturalHeight } = event.currentTarget;
+                  if (naturalWidth > 0 && naturalHeight > 0) {
+                    setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                  }
+                }}
                 referrerPolicy="no-referrer"
               />
               
