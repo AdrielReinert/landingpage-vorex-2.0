@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-zinc-850: #1d1d1f;
+  --color-zinc-900: #161617;
+  --color-zinc-950: #000000;
+  
+  --color-blue-500: #2997ff;
+  --color-blue-600: #0071e3;
+  
+  --color-gray-50: #f5f5f7;
+  --color-gray-100: #e8e8ed;
+  --color-gray-200: #d2d2d7;
+  --color-gray-300: #86868b;
+  --color-gray-400: #6e6e73;
+  --color-gray-500: #424245;
+
+  --background-image-titanium-gradient: linear-gradient(to bottom right, #3a3a3c, #161617);
+  --background-image-text-gradient: linear-gradient(to right, #ffffff 0%, #86868b 100%);
+  --background-image-glow: radial-gradient(circle at center, rgba(41, 151, 255, 0.15) 0%, transparent 60%);
+
+  --animate-fade-in-up: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+:root {
+  --bg-main: #000000;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: #f5f5f7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apple-style smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+.text-gradient {
+  background: linear-gradient(to bottom right, #ffffff 30%, #86868b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-nav {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.content-visible {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #000000; }
+::-webkit-scrollbar-thumb { background: #424245; border-radius: 4px; }
+
+::selection {
+  background-color: #2997ff;
+  color: white;
+}
