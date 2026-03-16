@@ -33,7 +33,7 @@ const PlatformPreview: React.FC = () => {
               <img 
                 src="https://i.postimg.cc/sX2YFcqH/Screen-Recording-03-16-2026-13-49-06-1.gif" 
                 alt="Interface da Plataforma Vorex" 
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-contain object-center bg-black"
                 referrerPolicy="no-referrer"
               />
               
