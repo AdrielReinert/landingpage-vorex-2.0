@@ -48,7 +48,7 @@ const MembersArea: React.FC = () => {
             >
               <div className="absolute inset-[4px] rounded-[2rem] overflow-hidden bg-black">
                 <img
-                  src="https://i.postimg.cc/0jWGrVX3/Screenshot-27.png"
+                  src="https://i.postimg.cc/fWrBzL44/IMG-8219.png"
                   alt="Print da area de membros"
                   className="absolute inset-0 w-full h-full object-contain object-center bg-black"
                   onLoad={(event) => {
