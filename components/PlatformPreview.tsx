@@ -84,7 +84,7 @@ const PlatformPreview: React.FC = () => {
             trigger: pinSection,
             start: 'top top',
             // Pin mais curto no mobile para aproximar rapidamente a seção abaixo.
-            end: '+=360',
+            end: '+=300',
             // Scrub maior no touch = amortecimento suave sem engasgos.
             scrub: 0.6,
             pin: true,
@@ -136,7 +136,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[33vh] md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[37vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
