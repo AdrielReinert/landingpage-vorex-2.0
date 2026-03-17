@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
 const Products: React.FC = () => {
+  const [mobileFrameAspectRatio, setMobileFrameAspectRatio] = useState('9 / 19.5');
+
   return (
     <section id="products" className="py-20 md:py-32 bg-black relative">
       <div className="max-w-[980px] mx-auto px-6">
@@ -51,13 +53,22 @@ const Products: React.FC = () => {
                 </p>
              </div>
              <div className="mt-8 flex justify-center relative">
-                <div className="w-32 h-64 bg-black border-4 border-zinc-800 rounded-[2rem] shadow-2xl relative overflow-hidden">
-                   <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
-                   </div>
-                   {/* Screen Content Mockup */}
-                   <div className="absolute top-2 left-2 right-2 bottom-2 bg-zinc-800 rounded-[1.5rem] overflow-hidden">
-                      <div className="w-full h-full bg-gradient-to-b from-zinc-700 to-zinc-900 opacity-50"></div>
-                   </div>
+                <div
+                  className="w-full max-w-[220px] bg-black border-4 border-zinc-800 rounded-[2rem] shadow-2xl relative overflow-hidden"
+                  style={{ aspectRatio: mobileFrameAspectRatio }}
+                >
+                   <img
+                     src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
+                     alt="Preview mobile da plataforma"
+                     className="absolute inset-0 w-full h-full object-contain object-center bg-zinc-900"
+                     onLoad={(event) => {
+                       const { naturalWidth, naturalHeight } = event.currentTarget;
+                       if (naturalWidth > 0 && naturalHeight > 0) {
+                         setMobileFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                       }
+                     }}
+                     referrerPolicy="no-referrer"
+                   />
                 </div>
              </div>
           </AppleSection>
