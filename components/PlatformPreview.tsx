@@ -16,12 +16,9 @@ const PlatformPreview: React.FC = () => {
 
     if (!pinSection || !maskWrap) return;
 
-    // ── [Otimização 2] Escala dinâmica ────────────────────────────────────
-    // Mede o tamanho NATURAL do elemento (scale=1) removendo o transform
-    // temporariamente — operação síncrona, sem flash visível.
-    // Calcula quantas vezes o elemento precisa crescer para cobrir a viewport
-    // inteira em qualquer tela, do celular ao monitor Ultrawide 4K.
-    function calcInitialScale(): number {
+    // Mede o tamanho natural do elemento (scale=1) e calcula a escala máxima
+    // necessária para o desktop cobrir a viewport com folga.
+    function calcDesktopInitialScale(): number {
       const prev = maskWrap!.style.transform;
       maskWrap!.style.transform = 'none';
       const w = maskWrap!.offsetWidth;
@@ -29,12 +26,24 @@ const PlatformPreview: React.FC = () => {
       maskWrap!.style.transform = prev;
 
       const ratio = Math.max(window.innerWidth / w, window.innerHeight / h);
-      // ×3 garante que o "buraco" das letras ultrapasse as bordas da viewport
       return Math.max(Math.ceil(ratio * 3), 8);
     }
 
+    // No mobile não queremos texto colossal cobrindo a viewport toda.
+    // A escala inicial é intencionalmente mais baixa para preservar proporção.
+    function calcMobileInitialScale(): number {
+      const prev = maskWrap!.style.transform;
+      maskWrap!.style.transform = 'none';
+      const w = maskWrap!.offsetWidth;
+      maskWrap!.style.transform = prev;
+
+      const widthRatio = window.innerWidth / Math.max(w, 1);
+      return gsap.utils.clamp(1.8, 3.4, widthRatio * 1.35);
+    }
+
     const ctx = gsap.context(() => {
-      ScrollTrigger.getById('design-mask-reveal')?.kill();
+      ScrollTrigger.getById('design-mask-reveal-desktop')?.kill();
+      ScrollTrigger.getById('design-mask-reveal-mobile')?.kill();
 
       // ── [Otimização 1] GPU: configura compositing layer dedicada ─────────
       // force3D instrui o GSAP a manter translate3d ativo (promove o elemento
@@ -45,29 +54,48 @@ const PlatformPreview: React.FC = () => {
         force3D: true,
       });
 
-      // ── Timeline com fromTo + função ─────────────────────────────────────
-      // Sem onLeave/onLeaveBack: esses callbacks conflitavam com o scrub
-      // ainda em curso ao final da animação, causando o "pulo"/desaparecimento.
-      // O GSAP gerencia o estado final com fill:"both" (padrão do fromTo).
-      // immediateRender:false evita que o elemento pule para o estado "from"
-      // antes que o ScrollTrigger tenha calculado o ponto de início.
-      gsap.timeline({
-        scrollTrigger: {
-          id: 'design-mask-reveal',
-          trigger: pinSection,
-          start: 'top top',
-          end: '+=1700',
-          scrub: 0.5,           // catch-up suave, sem conflito com Lenis
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      }).fromTo(
-        maskWrap,
-        { scale: calcInitialScale, immediateRender: false },
-        { scale: 1, ease: 'none', force3D: true },
-      );
+      const mm = gsap.matchMedia();
+
+      mm.add('(min-width: 768px)', () => {
+        gsap.timeline({
+          scrollTrigger: {
+            id: 'design-mask-reveal-desktop',
+            trigger: pinSection,
+            start: 'top top',
+            end: '+=1700',
+            scrub: 0.5,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        }).fromTo(
+          maskWrap,
+          { scale: calcDesktopInitialScale, immediateRender: false },
+          { scale: 1, ease: 'none', force3D: true },
+        );
+      });
+
+      mm.add('(max-width: 767px)', () => {
+        // Mobile: sem pin e com duração curta para evitar espaçamento gigante.
+        gsap.timeline({
+          scrollTrigger: {
+            id: 'design-mask-reveal-mobile',
+            trigger: pinSection,
+            start: 'top 82%',
+            end: '+=260',
+            scrub: 0.22,
+            pin: false,
+            invalidateOnRefresh: true,
+          },
+        }).fromTo(
+          maskWrap,
+          { scale: calcMobileInitialScale, immediateRender: false },
+          { scale: 1, ease: 'none', force3D: true },
+        );
+      });
+
+      return () => mm.revert();
     }, pinSection);
 
     return () => {
@@ -83,7 +111,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative">
         <div
           ref={pinSectionRef}
-          className="relative h-screen w-full overflow-hidden grid place-items-center"
+          className="relative w-full overflow-hidden grid place-items-center py-14 md:py-0 md:h-screen"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -92,7 +120,7 @@ const PlatformPreview: React.FC = () => {
             className="relative z-10 w-full grid place-items-center will-change-transform"
           >
             <h2
-              className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+              className="max-w-[12ch] md:max-w-none text-[clamp(2.3rem,11vw,3.5rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.03] tracking-[-0.03em] text-center text-white px-5 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
@@ -104,7 +132,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[28vh] md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 mt-3 md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
