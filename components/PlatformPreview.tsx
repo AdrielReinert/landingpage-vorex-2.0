@@ -16,7 +16,8 @@ const PlatformPreview: React.FC = () => {
           </TextReveal>
           <AppleSection delay={0.2}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
-              Uma interface imersiva desenhada para maximizar o tempo de sessão e o engajamento dos jogadores. O cassino em amostra é de um cliente real da Vorex.
+              Uma interface imersiva desenhada para maximizar o tempo de sessão e o engajamento dos jogadores.{' '}
+              <span className="text-yellow-500 font-semibold">O cassino em amostra é de um cliente real da Vorex.</span>
             </p>
           </AppleSection>
         </div>
