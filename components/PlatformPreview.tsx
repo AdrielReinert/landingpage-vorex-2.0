@@ -1,71 +1,105 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AppleSection } from './AppleSection';
 
 const PlatformPreview: React.FC = () => {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const pinSectionRef = useRef<HTMLDivElement | null>(null);
+  const maskWrapRef = useRef<HTMLDivElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
 
-  const titleMaskY = useTransform(scrollYProgress, [0.08, 0.35, 0.6], [42, 18, 0]);
-  const titleMaskX = useTransform(scrollYProgress, [0.08, 0.35, 0.6], [22, 8, 0]);
-  const titleClipMask = useMotionTemplate`inset(${titleMaskY}% ${titleMaskX}% ${titleMaskY}% ${titleMaskX}% round 0.6rem)`;
-  const titleScale = useTransform(scrollYProgress, [0.08, 0.35, 0.6], [1.06, 1.02, 1]);
+    const pinSection = pinSectionRef.current;
+    const maskWrap = maskWrapRef.current;
+
+    if (!pinSection || !maskWrap) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.set(maskWrap, { scale: 40, transformOrigin: '50% 50%' });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: pinSection,
+          start: 'top top',
+          end: '+=2600',
+          scrub: true,
+          pin: true,
+          anticipatePin: 1,
+        },
+      }).to(maskWrap, {
+        scale: 1,
+        ease: 'none',
+      });
+    }, pinSection);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 bg-black relative flex flex-col items-center overflow-hidden">
-      <div className="max-w-[980px] w-full px-6 z-10">
-        
-        <div className="mb-8 text-center flex flex-col items-center">
-          <motion.h2
-            className="text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tight"
-            style={{ clipPath: titleClipMask, scale: titleScale }}
+    <section className="bg-black relative overflow-hidden">
+      <div
+        ref={pinSectionRef}
+        className="relative h-screen w-screen overflow-hidden grid place-items-center"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
+
+        <div
+          ref={maskWrapRef}
+          className="relative z-10 w-full grid place-items-center will-change-transform"
+        >
+          <h2
+            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-transparent px-4"
+            style={{
+              backgroundImage: "url('https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+            }}
           >
             Design que converte.
-          </motion.h2>
-          <AppleSection delay={0.2}>
+          </h2>
+        </div>
+      </div>
+
+      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28">
+        <div className="mb-8 text-center flex flex-col items-center">
+          <AppleSection delay={0.05}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
               Uma interface imersiva desenhada para maximizar o tempo de sessão e o engajamento dos jogadores.{' '}
               <span className="text-yellow-500 font-semibold">O cassino em amostra é de um cliente real da Vorex.</span>
             </p>
           </AppleSection>
         </div>
-      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 36, scale: 0.95 }}
-         whileInView={{ opacity: 1, y: 0, scale: 1 }}
-         viewport={{ once: true, amount: 0.2 }}
-         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-         style={{ willChange: "transform, opacity" }}
-         className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8"
-      >
-           {/* Placeholder for a high-end UI shot */}
-           <div
-             className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
-             style={{ aspectRatio: frameAspectRatio }}
-           >
-              <img
-                src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
-                alt="Interface da Plataforma Vorex"
-                className="absolute inset-0 w-full h-full object-contain object-center bg-black"
-                onLoad={(event) => {
-                  const { naturalWidth, naturalHeight } = event.currentTarget;
-                  if (naturalWidth > 0 && naturalHeight > 0) {
-                    setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
-                  }
-                }}
-                referrerPolicy="no-referrer"
-              />
-              
-              {/* Reflection effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-           </div>
-      </motion.div>
+        <AppleSection delay={0.12} className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8 mx-auto">
+          <div
+            className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
+            style={{ aspectRatio: frameAspectRatio }}
+          >
+            <img
+              src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
+              alt="Interface da Plataforma Vorex"
+              className="absolute inset-0 w-full h-full object-contain object-center bg-black"
+              onLoad={(event) => {
+                const { naturalWidth, naturalHeight } = event.currentTarget;
+                if (naturalWidth > 0 && naturalHeight > 0) {
+                  setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                }
+              }}
+              referrerPolicy="no-referrer"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          </div>
+        </AppleSection>
+      </div>
     </section>
   );
 };
