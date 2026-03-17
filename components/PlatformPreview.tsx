@@ -24,7 +24,6 @@ const PlatformPreview: React.FC = () => {
       gsap.set(maskWrap, {
         scale: 24,
         transformOrigin: '50% 50%',
-        force3D: true,
       });
 
       gsap.timeline({
@@ -41,7 +40,6 @@ const PlatformPreview: React.FC = () => {
       }).to(maskWrap, {
         scale: 1,
         ease: 'none',
-        force3D: true,
       });
     }, pinSection);
 
@@ -60,11 +58,11 @@ const PlatformPreview: React.FC = () => {
 
         <div
           ref={maskWrapRef}
-          className="relative z-10 w-full grid place-items-center will-change-transform [backface-visibility:hidden]"
+          className="relative z-10 w-full grid place-items-center will-change-transform"
         >
           <h2
-            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4"
-            style={{ transform: 'translateZ(0)' }}
+            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+            style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
           >
             Design que converte.
           </h2>
