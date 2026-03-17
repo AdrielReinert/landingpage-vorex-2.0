@@ -11,6 +11,7 @@ import Profit from './components/Profit';
 import Process from './components/Process';
 import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
+import AboutUs from './components/AboutUs';
 import OnboardingForm from './components/OnboardingForm';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
@@ -91,6 +92,7 @@ const App: React.FC = () => {
         <NetworkingGroup />
         <Process />
         <TargetAudience />
+        <AboutUs />
         <OnboardingForm />
         <FAQ />
       </main>
