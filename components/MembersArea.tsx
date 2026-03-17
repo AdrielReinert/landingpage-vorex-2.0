@@ -43,7 +43,7 @@ const MembersArea: React.FC = () => {
 
           <AppleSection delay={0.2} className="flex justify-center lg:justify-end">
             <div
-              className="w-full max-w-[520px] bg-zinc-950 border-[6px] border-zinc-800 rounded-[2.4rem] shadow-2xl relative overflow-hidden"
+              className="w-full max-w-[280px] bg-zinc-950 border-[6px] border-zinc-800 rounded-[2.4rem] shadow-2xl relative overflow-hidden"
               style={{ aspectRatio: frameAspectRatio }}
             >
               <div className="absolute inset-[4px] rounded-[2rem] overflow-hidden bg-black">
