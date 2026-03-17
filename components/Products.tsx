@@ -67,7 +67,6 @@ const Products: React.FC = () => {
                          setMobileFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
                        }
                      }}
-                     referrerPolicy="no-referrer"
                    />
                 </div>
              </div>
