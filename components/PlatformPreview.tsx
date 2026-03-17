@@ -96,12 +96,13 @@ const PlatformPreview: React.FC = () => {
 
   return (
     <section className="bg-black relative overflow-hidden">
-      {/* [Otimização 3] contain: layout paint isola o contexto de empilhamento,
-          impedindo que animações neste container causem reflow no resto da página. */}
+      {/* IMPORTANTE: sem contain:layout/paint e sem overflow:hidden aqui.
+          O ScrollTrigger usa position:fixed ao pinar — qualquer ancestor com
+          'contain' ou 'overflow:hidden' quebraria o pin prendendo o fixed
+          ao container em vez da viewport. */}
       <div
         ref={pinSectionRef}
-        className="relative h-screen w-full overflow-hidden grid place-items-center"
-        style={{ contain: 'layout paint' }}
+        className="relative h-screen w-full grid place-items-center"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 

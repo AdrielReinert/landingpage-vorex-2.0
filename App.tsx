@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { BackToTop, ScrollProgress } from './components/UiEnhancements';
@@ -21,7 +24,23 @@ const App: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check if URL has ?admin=true
+    // ── Lenis + GSAP ScrollTrigger integration ──────────────────────────────
+    // Lenis intercepta o scroll nativo e suaviza via RAF, eliminando o jitter
+    // causado por conflito entre scroll-behavior nativo e o scrub do GSAP.
+    // autoRaf: false → o GSAP ticker controla o loop, garantindo sincronia.
+    gsap.registerPlugin(ScrollTrigger);
+    const lenis = new Lenis({ autoRaf: false });
+
+    // Mantém o ScrollTrigger em sync com a posição calculada pelo Lenis
+    lenis.on('scroll', () => ScrollTrigger.update());
+
+    // Feed do tempo do GSAP para o Lenis (ambos rodam no mesmo RAF)
+    const gsapRaf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(gsapRaf);
+    // Desativa o amortecimento de lag do ticker para scroll 1:1 sem delay
+    gsap.ticker.lagSmoothing(0);
+
+    // ── Check if URL has ?admin=true
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('admin') === 'true') {
       setIsAdmin(true);
@@ -66,6 +85,9 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener('click', handleClick);
       document.removeEventListener('click', trackLeadOnWhatsAppClick, true);
+      // Limpa Lenis e ticker para evitar memory leaks em HMR/StrictMode
+      lenis.destroy();
+      gsap.ticker.remove(gsapRaf);
     };
   }, []);
 
