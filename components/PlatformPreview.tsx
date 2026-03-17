@@ -35,10 +35,13 @@ const PlatformPreview: React.FC = () => {
       const prev = maskWrap!.style.transform;
       maskWrap!.style.transform = 'none';
       const w = maskWrap!.offsetWidth;
+      const h = maskWrap!.offsetHeight;
       maskWrap!.style.transform = prev;
 
-      const ratio = Math.max(window.innerWidth / Math.max(w, 1), window.innerHeight / Math.max(maskWrap!.offsetHeight, 1));
-      return gsap.utils.clamp(4.8, 8.5, ratio * 2.25);
+      const widthRatio = window.innerWidth / Math.max(w, 1);
+      const heightRatio = (window.innerHeight * 0.52) / Math.max(h, 1);
+      const ratio = Math.min(widthRatio * 1.7, heightRatio * 2.1);
+      return gsap.utils.clamp(3.6, 5.8, ratio);
     }
 
     const ctx = gsap.context(() => {
@@ -91,6 +94,8 @@ const PlatformPreview: React.FC = () => {
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
+            fastScrollEnd: true,
+            preventOverlaps: true,
             invalidateOnRefresh: true,
           },
         }).fromTo(
@@ -122,10 +127,10 @@ const PlatformPreview: React.FC = () => {
 
           <div
             ref={maskWrapRef}
-            className="relative z-10 w-full grid place-items-center will-change-transform"
+            className="relative z-10 w-fit max-w-full mx-auto grid place-items-center will-change-transform md:w-full"
           >
             <h2
-            className="max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+            className="mx-auto max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
