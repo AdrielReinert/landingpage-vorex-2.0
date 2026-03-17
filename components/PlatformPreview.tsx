@@ -113,7 +113,7 @@ const PlatformPreview: React.FC = () => {
       {/* Seção do pin isolada: overflow-hidden recortará o texto em escala
           grande sem afetar nenhum ancestor (ancestor com overflow-hidden
           quebraria position:fixed do pin — aqui é o próprio elemento fixado). */}
-      <section className="bg-black relative z-10 isolate">
+      <section className="bg-black relative z-10 md:z-0 isolate">
         <div
           ref={pinSectionRef}
           className="relative h-[66dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
@@ -136,7 +136,7 @@ const PlatformPreview: React.FC = () => {
 
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
-      <section className="bg-black relative z-20 md:z-0">
+      <section className="bg-black relative z-20 md:z-20">
         <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[4vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
