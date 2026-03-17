@@ -5,15 +5,15 @@ import { TextReveal } from './TextReveal';
 const team = [
   {
     name: 'Adriel',
-    role: 'Programador & Co-fundador',
+    role: 'Programador, Designer & Co-fundador',
     image: 'https://i.postimg.cc/zBswFvY5/belfot-1773757574984.png',
-    bio: 'Desenvolvedor full-stack com foco em criar plataformas de alto desempenho para o mercado de iGaming. Lidera a arquitetura técnica da Vorex, garantindo que cada operador tenha uma estrutura sólida, rápida e escalável desde o primeiro dia de operação.',
+    bio: 'Adriel e o cara que faz acontecer no produto: programa, desenha a experiencia e transforma ideia em plataforma pronta para vender. Ele cuida para tudo ficar bonito, rapido e funcional, do visual ate a parte tecnica.',
   },
   {
     name: 'José',
-    role: 'Programador & Co-fundador',
+    role: 'Especialista em Cassino & Co-fundador',
     image: 'https://i.postimg.cc/13vpYJZy/belfot-1769727943564.png',
-    bio: 'Especialista em integrações de pagamento e infraestrutura de cassinos online. Responsável pelo desenvolvimento dos sistemas de gateway PIX e automação de campanhas que permitem aos operadores da Vorex escalar o faturamento com consistência e segurança.',
+    bio: 'Jose e o cara que entende de cassino na pratica e sabe o que realmente gera resultado. Ele ajuda cada operador a montar a estrategia certa para atrair jogadores, escalar a operacao e faturar com mais consistencia.',
   },
 ];
 
