@@ -29,16 +29,16 @@ const PlatformPreview: React.FC = () => {
       return Math.max(Math.ceil(ratio * 3), 8);
     }
 
-    // No mobile não queremos texto colossal cobrindo a viewport toda.
-    // A escala inicial é intencionalmente mais baixa para preservar proporção.
+    // No mobile mantemos o mesmo comportamento visual do desktop, mas
+    // limitamos um pouco a escala para caber melhor em telas estreitas.
     function calcMobileInitialScale(): number {
       const prev = maskWrap!.style.transform;
       maskWrap!.style.transform = 'none';
       const w = maskWrap!.offsetWidth;
       maskWrap!.style.transform = prev;
 
-      const widthRatio = window.innerWidth / Math.max(w, 1);
-      return gsap.utils.clamp(1.8, 3.4, widthRatio * 1.35);
+      const ratio = Math.max(window.innerWidth / Math.max(w, 1), window.innerHeight / Math.max(maskWrap!.offsetHeight, 1));
+      return gsap.utils.clamp(4.8, 8.5, ratio * 2.25);
     }
 
     const ctx = gsap.context(() => {
@@ -77,15 +77,17 @@ const PlatformPreview: React.FC = () => {
       });
 
       mm.add('(max-width: 767px)', () => {
-        // Mobile: sem pin e com duração curta para evitar espaçamento gigante.
+        // Mobile igual ao desktop (com pin), ajustando apenas intensidade.
         gsap.timeline({
           scrollTrigger: {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
-            start: 'top 82%',
-            end: '+=260',
-            scrub: 0.22,
-            pin: false,
+            start: 'top top',
+            end: '+=1300',
+            scrub: 0.45,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         }).fromTo(
@@ -111,7 +113,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative">
         <div
           ref={pinSectionRef}
-          className="relative w-full overflow-hidden grid place-items-center py-14 md:py-0 md:h-screen"
+          className="relative h-screen w-full overflow-hidden grid place-items-center"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -120,7 +122,7 @@ const PlatformPreview: React.FC = () => {
             className="relative z-10 w-full grid place-items-center will-change-transform"
           >
             <h2
-              className="max-w-[12ch] md:max-w-none text-[clamp(2.3rem,11vw,3.5rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.03] tracking-[-0.03em] text-center text-white px-5 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+            className="max-w-[9.5ch] md:max-w-none text-[clamp(1.55rem,10.2vw,3rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
@@ -132,7 +134,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 mt-3 md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[18vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
