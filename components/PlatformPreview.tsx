@@ -31,19 +31,6 @@ const PlatformPreview: React.FC = () => {
       return Math.max(Math.ceil(ratio * 3), 8);
     }
 
-    // No mobile o início precisa parecer realmente vindo do infinito,
-    // então a escala inicial é muito mais agressiva que a final legível.
-    function calcMobileInitialScale(): number {
-      const prev = title!.style.transform;
-      title!.style.transform = 'none';
-      const w = title!.offsetWidth;
-      const h = title!.offsetHeight;
-      title!.style.transform = prev;
-
-      const ratio = Math.max(window.innerWidth / Math.max(w, 1), window.innerHeight / Math.max(h, 1));
-      return gsap.utils.clamp(10, 18, ratio * 6.5);
-    }
-
     const ctx = gsap.context(() => {
       ScrollTrigger.getById('design-mask-reveal-desktop')?.kill();
       ScrollTrigger.getById('design-mask-reveal-mobile')?.kill();
@@ -86,40 +73,10 @@ const PlatformPreview: React.FC = () => {
 
       mm.add('(max-width: 768px)', () => {
         gsap.set(title, {
-          scale: calcMobileInitialScale(),
-          autoAlpha: 0,
+          scale: 1,
+          autoAlpha: 1,
           force3D: true,
         });
-
-        // Mobile com pin robusto: pinSpacing empurra a próxima seção para baixo
-        // até o scale chegar em 1, evitando qualquer invasão visual.
-        gsap.timeline({
-          scrollTrigger: {
-            id: 'design-mask-reveal-mobile',
-            trigger: pinSection,
-            // Começa antes para evitar um bloco preto "mudo" no mobile.
-            start: 'top 82%',
-            end: '+=260',
-            scrub: 0.6,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-            fastScrollEnd: true,
-            preventOverlaps: true,
-            invalidateOnRefresh: true,
-          },
-        })
-          .fromTo(
-            title,
-            { scale: calcMobileInitialScale },
-            { scale: 1, ease: 'none', force3D: true },
-            0,
-          )
-          .to(
-            title,
-            { autoAlpha: 1, duration: 0.08, ease: 'none' },
-            0,
-          );
       });
 
       return () => mm.revert();
@@ -138,7 +95,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative z-10 md:z-0 isolate">
         <div
           ref={pinSectionRef}
-          className="relative h-[54dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
+          className="relative min-h-[34vh] md:h-screen w-full overflow-hidden grid place-items-center bg-black py-12 md:py-0"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
