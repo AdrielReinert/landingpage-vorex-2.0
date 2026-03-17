@@ -87,12 +87,12 @@ const App: React.FC = () => {
         <Concept />
         <PlatformPreview />
         <DashboardFeature />
-        <Profit />
         <MembersArea />
         <NetworkingGroup />
         <Process />
         <TargetAudience />
         <AboutUs />
+        <Profit />
         <OnboardingForm />
         <FAQ />
       </main>
