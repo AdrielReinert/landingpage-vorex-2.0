@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { BackToTop, ScrollProgress } from './components/UiEnhancements';
 import PlatformPreview from './components/PlatformPreview';
+import NetworkingGroup from './components/NetworkingGroup';
 import Concept from './components/Concept';
 import Products from './components/Products';
 import DashboardFeature from './components/DashboardFeature';
@@ -82,6 +83,7 @@ const App: React.FC = () => {
       <main className="relative z-10 w-full flex flex-col">
         <Hero />
         <PlatformPreview />
+        <NetworkingGroup />
         <Concept />
         <Products />
         <DashboardFeature />
