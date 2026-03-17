@@ -52,7 +52,7 @@ const PlatformPreview: React.FC = () => {
     <section className="bg-black relative overflow-hidden">
       <div
         ref={pinSectionRef}
-        className="relative h-screen w-full overflow-hidden grid place-items-center"
+        className="relative h-screen w-full overflow-hidden grid place-items-end pb-14 md:pb-20"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
