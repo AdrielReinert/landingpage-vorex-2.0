@@ -36,7 +36,7 @@ const PlatformPreview: React.FC = () => {
              style={{ aspectRatio: frameAspectRatio }}
            >
               <img 
-                src="https://i.postimg.cc/sX2YFcqH/Screen-Recording-03-16-2026-13-49-06-1.gif" 
+                src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif" 
                 alt="Interface da Plataforma Vorex" 
                 className="absolute inset-0 w-full h-full object-contain object-center bg-black"
                 onLoad={(event) => {
