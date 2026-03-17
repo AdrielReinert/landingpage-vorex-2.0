@@ -59,7 +59,7 @@ const Products: React.FC = () => {
                 >
                    <div className="absolute inset-[4px] rounded-[1.8rem] overflow-hidden bg-black">
                       <img
-                        src="https://i.postimg.cc/fWrBzL44/IMG-8219.png"
+                        src="https://i.postimg.cc/3wRLBDmx/IMG-8219.png"
                         alt="Preview mobile da plataforma"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                         onLoad={(event) => {
