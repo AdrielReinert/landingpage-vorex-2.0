@@ -8,6 +8,7 @@ import Products from './components/Products';
 import DashboardFeature from './components/DashboardFeature';
 import Profit from './components/Profit';
 import Process from './components/Process';
+import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
 import OnboardingForm from './components/OnboardingForm';
 import FAQ from './components/FAQ';
@@ -86,6 +87,7 @@ const App: React.FC = () => {
         <DashboardFeature />
         <Profit />
         <Process />
+        <MembersArea />
         <TargetAudience />
         <OnboardingForm />
         <FAQ />
