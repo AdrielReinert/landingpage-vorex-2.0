@@ -124,7 +124,7 @@ const PlatformPreview: React.FC = () => {
             className="relative z-10 w-full grid place-items-center will-change-transform"
           >
             <h2
-            className="max-w-[9.5ch] md:max-w-none text-[clamp(1.55rem,10.2vw,3rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+            className="max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
@@ -136,7 +136,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[26vh] md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[33vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
