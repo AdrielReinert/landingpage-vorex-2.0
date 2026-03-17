@@ -86,8 +86,8 @@ const App: React.FC = () => {
         <Products />
         <DashboardFeature />
         <Profit />
-        <Process />
         <MembersArea />
+        <Process />
         <TargetAudience />
         <OnboardingForm />
         <FAQ />
