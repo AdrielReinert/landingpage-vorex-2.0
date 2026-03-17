@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AppleSection } from './AppleSection';
@@ -8,7 +8,7 @@ const PlatformPreview: React.FC = () => {
   const maskWrapRef = useRef<HTMLDivElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const pinSection = pinSectionRef.current;
@@ -19,20 +19,29 @@ const PlatformPreview: React.FC = () => {
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(maskWrap, { scale: 40, transformOrigin: '50% 50%' });
+      ScrollTrigger.getById('design-mask-reveal')?.kill();
+
+      gsap.set(maskWrap, {
+        scale: 24,
+        transformOrigin: '50% 50%',
+        force3D: true,
+      });
 
       gsap.timeline({
         scrollTrigger: {
+          id: 'design-mask-reveal',
           trigger: pinSection,
           start: 'top top',
           end: '+=2600',
-          scrub: true,
+          scrub: 0.7,
           pin: true,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       }).to(maskWrap, {
         scale: 1,
         ease: 'none',
+        force3D: true,
       });
     }, pinSection);
 
@@ -45,22 +54,23 @@ const PlatformPreview: React.FC = () => {
     <section className="bg-black relative overflow-hidden">
       <div
         ref={pinSectionRef}
-        className="relative h-screen w-screen overflow-hidden grid place-items-center"
+        className="relative h-screen w-full overflow-hidden grid place-items-center"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
         <div
           ref={maskWrapRef}
-          className="relative z-10 w-full grid place-items-center will-change-transform"
+          className="relative z-10 w-full grid place-items-center will-change-transform [backface-visibility:hidden]"
         >
           <h2
             className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-transparent px-4"
             style={{
-              backgroundImage: "url('https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif')",
+              backgroundImage: "url('https://i.postimg.cc/0jWGrVX3/Screenshot-27.png')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
+              transform: 'translateZ(0)',
             }}
           >
             Design que converte.
