@@ -52,7 +52,7 @@ const PlatformPreview: React.FC = () => {
     <section className="bg-black relative overflow-hidden">
       <div
         ref={pinSectionRef}
-        className="relative h-[80vh] md:h-[86vh] w-full overflow-hidden grid place-items-center"
+        className="relative h-[72vh] md:h-[80vh] w-full overflow-hidden grid place-items-center"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -69,7 +69,7 @@ const PlatformPreview: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-24 md:-mt-32">
+      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-36 md:-mt-44">
         <div className="mb-8 text-center flex flex-col items-center">
           <AppleSection delay={0.05}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
