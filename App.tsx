@@ -83,9 +83,9 @@ const App: React.FC = () => {
       
       <main className="relative z-10 w-full flex flex-col">
         <Hero />
+        <Products />
         <PlatformPreview />
         <Concept />
-        <Products />
         <DashboardFeature />
         <Profit />
         <MembersArea />
