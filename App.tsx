@@ -83,7 +83,6 @@ const App: React.FC = () => {
       
       <main className="relative z-10 w-full flex flex-col">
         <Hero />
-        <AboutUs />
         <PlatformPreview />
         <Concept />
         <Products />
@@ -93,6 +92,7 @@ const App: React.FC = () => {
         <NetworkingGroup />
         <Process />
         <TargetAudience />
+        <AboutUs />
         <OnboardingForm />
         <FAQ />
       </main>
