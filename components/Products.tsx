@@ -58,7 +58,7 @@ const Products: React.FC = () => {
                   style={{ aspectRatio: mobileFrameAspectRatio }}
                 >
                    <img
-                     src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
+                     src="https://i.postimg.cc/3wRLBDmx/IMG-8219.png"
                      alt="Preview mobile da plataforma"
                      className="absolute inset-0 w-full h-full object-contain object-center bg-zinc-900"
                      onLoad={(event) => {
