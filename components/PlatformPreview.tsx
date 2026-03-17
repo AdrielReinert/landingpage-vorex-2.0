@@ -77,7 +77,8 @@ const PlatformPreview: React.FC = () => {
       });
 
       mm.add('(max-width: 768px)', () => {
-        // Mobile igual ao desktop (com pin), ajustando apenas intensidade.
+        // Mobile com pin robusto: pinSpacing empurra a próxima seção para baixo
+        // até o scale chegar em 1, evitando qualquer invasão visual.
         gsap.timeline({
           scrollTrigger: {
             id: 'design-mask-reveal-mobile',
@@ -86,7 +87,7 @@ const PlatformPreview: React.FC = () => {
             // Pin mais curto no mobile para aproximar rapidamente a seção abaixo.
             end: '+=300',
             // Scrub maior no touch = amortecimento suave sem engasgos.
-            scrub: 0.6,
+            scrub: 0.8,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -112,10 +113,10 @@ const PlatformPreview: React.FC = () => {
       {/* Seção do pin isolada: overflow-hidden recortará o texto em escala
           grande sem afetar nenhum ancestor (ancestor com overflow-hidden
           quebraria position:fixed do pin — aqui é o próprio elemento fixado). */}
-      <section className="bg-black relative">
+      <section className="bg-black relative z-10 isolate">
         <div
           ref={pinSectionRef}
-          className="relative h-screen w-full overflow-hidden grid place-items-center"
+          className="relative h-[100dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -135,8 +136,8 @@ const PlatformPreview: React.FC = () => {
 
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
-      <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[37vh] md:-mt-[30vh]">
+      <section className="bg-black relative z-0">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 mt-0 md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
