@@ -60,6 +60,11 @@ const PlatformPreview: React.FC = () => {
       const mm = gsap.matchMedia();
 
       mm.add('(min-width: 768px)', () => {
+        gsap.set(title, {
+          scale: calcDesktopInitialScale(),
+          force3D: true,
+        });
+
         gsap.timeline({
           scrollTrigger: {
             id: 'design-mask-reveal-desktop',
@@ -74,12 +79,17 @@ const PlatformPreview: React.FC = () => {
           },
         }).fromTo(
           title,
-          { scale: calcDesktopInitialScale, immediateRender: false },
+          { scale: calcDesktopInitialScale },
           { scale: 1, ease: 'none', force3D: true },
         );
       });
 
       mm.add('(max-width: 768px)', () => {
+        gsap.set(title, {
+          scale: calcMobileInitialScale(),
+          force3D: true,
+        });
+
         // Mobile com pin robusto: pinSpacing empurra a próxima seção para baixo
         // até o scale chegar em 1, evitando qualquer invasão visual.
         gsap.timeline({
@@ -98,7 +108,7 @@ const PlatformPreview: React.FC = () => {
           },
         }).fromTo(
           title,
-          { scale: calcMobileInitialScale, immediateRender: false },
+          { scale: calcMobileInitialScale },
           { scale: 1, ease: 'none', force3D: true },
         );
       });
