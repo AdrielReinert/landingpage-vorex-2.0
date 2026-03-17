@@ -22,7 +22,7 @@ const PlatformPreview: React.FC = () => {
       ScrollTrigger.getById('design-mask-reveal')?.kill();
 
       gsap.set(maskWrap, {
-        scale: 22,
+        scale: 20,
         transformOrigin: '50% 50%',
         willChange: 'transform',
       });
@@ -32,12 +32,13 @@ const PlatformPreview: React.FC = () => {
           id: 'design-mask-reveal',
           trigger: pinSection,
           start: 'top top',
-          end: '+=2200',
-          scrub: 0.55,
+          end: '+=1700',
+          scrub: 0.7,
           pin: true,
-          anticipatePin: 1,
-          fastScrollEnd: true,
+          pinSpacing: true,
           invalidateOnRefresh: true,
+          onLeave: () => gsap.set(maskWrap, { scale: 1 }),
+          onLeaveBack: () => gsap.set(maskWrap, { scale: 20 }),
         },
       }).to(maskWrap, {
         scale: 1,
@@ -54,7 +55,7 @@ const PlatformPreview: React.FC = () => {
     <section className="bg-black relative overflow-hidden">
       <div
         ref={pinSectionRef}
-        className="relative h-[68vh] md:h-[76vh] w-full overflow-hidden grid place-items-center"
+        className="relative h-screen w-full overflow-hidden grid place-items-center"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -71,7 +72,7 @@ const PlatformPreview: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-44 md:-mt-52">
+      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[20vh] md:-mt-[22vh]">
         <div className="mb-8 text-center flex flex-col items-center">
           <AppleSection delay={0.05}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
