@@ -87,6 +87,7 @@ const PlatformPreview: React.FC = () => {
       mm.add('(max-width: 768px)', () => {
         gsap.set(title, {
           scale: calcMobileInitialScale(),
+          autoAlpha: 0,
           force3D: true,
         });
 
@@ -106,11 +107,18 @@ const PlatformPreview: React.FC = () => {
             preventOverlaps: true,
             invalidateOnRefresh: true,
           },
-        }).fromTo(
-          title,
-          { scale: calcMobileInitialScale },
-          { scale: 1, ease: 'none', force3D: true },
-        );
+        })
+          .fromTo(
+            title,
+            { scale: calcMobileInitialScale },
+            { scale: 1, ease: 'none', force3D: true },
+            0,
+          )
+          .to(
+            title,
+            { autoAlpha: 1, duration: 0.12, ease: 'none' },
+            0,
+          );
       });
 
       return () => mm.revert();
