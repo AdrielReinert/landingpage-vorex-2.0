@@ -6,6 +6,7 @@ import { AppleSection } from './AppleSection';
 const PlatformPreview: React.FC = () => {
   const pinSectionRef = useRef<HTMLDivElement | null>(null);
   const maskWrapRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
 
   useLayoutEffect(() => {
@@ -13,17 +14,18 @@ const PlatformPreview: React.FC = () => {
 
     const pinSection = pinSectionRef.current;
     const maskWrap = maskWrapRef.current;
+    const title = titleRef.current;
 
-    if (!pinSection || !maskWrap) return;
+    if (!pinSection || !maskWrap || !title) return;
 
     // Mede o tamanho natural do elemento (scale=1) e calcula a escala máxima
     // necessária para o desktop cobrir a viewport com folga.
     function calcDesktopInitialScale(): number {
-      const prev = maskWrap!.style.transform;
-      maskWrap!.style.transform = 'none';
-      const w = maskWrap!.offsetWidth;
-      const h = maskWrap!.offsetHeight;
-      maskWrap!.style.transform = prev;
+      const prev = title!.style.transform;
+      title!.style.transform = 'none';
+      const w = title!.offsetWidth;
+      const h = title!.offsetHeight;
+      title!.style.transform = prev;
 
       const ratio = Math.max(window.innerWidth / w, window.innerHeight / h);
       return Math.max(Math.ceil(ratio * 3), 8);
@@ -32,16 +34,14 @@ const PlatformPreview: React.FC = () => {
     // No mobile mantemos o mesmo comportamento visual do desktop, mas
     // limitamos um pouco a escala para caber melhor em telas estreitas.
     function calcMobileInitialScale(): number {
-      const prev = maskWrap!.style.transform;
-      maskWrap!.style.transform = 'none';
-      const w = maskWrap!.offsetWidth;
-      const h = maskWrap!.offsetHeight;
-      maskWrap!.style.transform = prev;
+      const prev = title!.style.transform;
+      title!.style.transform = 'none';
+      const w = title!.offsetWidth;
+      const h = title!.offsetHeight;
+      title!.style.transform = prev;
 
-      const widthRatio = window.innerWidth / Math.max(w, 1);
-      const heightRatio = (window.innerHeight * 0.52) / Math.max(h, 1);
-      const ratio = Math.min(widthRatio * 1.7, heightRatio * 2.1);
-      return gsap.utils.clamp(3.6, 5.8, ratio);
+      const ratio = Math.max(window.innerWidth / Math.max(w, 1), window.innerHeight / Math.max(h, 1));
+      return gsap.utils.clamp(4.6, 7.2, ratio * 2.6);
     }
 
     const ctx = gsap.context(() => {
@@ -52,7 +52,7 @@ const PlatformPreview: React.FC = () => {
       // force3D instrui o GSAP a manter translate3d ativo (promove o elemento
       // para a GPU). willChange sinaliza ao browser para alocar a camada
       // antecipadamente — somente transform é animado, nunca width/height.
-      gsap.set(maskWrap, {
+      gsap.set(title, {
         transformOrigin: '50% 50%',
         force3D: true,
       });
@@ -73,7 +73,7 @@ const PlatformPreview: React.FC = () => {
             invalidateOnRefresh: true,
           },
         }).fromTo(
-          maskWrap,
+          title,
           { scale: calcDesktopInitialScale, immediateRender: false },
           { scale: 1, ease: 'none', force3D: true },
         );
@@ -87,10 +87,8 @@ const PlatformPreview: React.FC = () => {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
             start: 'top top',
-            // Pin bem curto no mobile para a próxima seção subir mais cedo.
-            end: '+=120',
-            // Suave no touch, mantendo resposta rápida.
-            scrub: 0.75,
+            end: '+=300',
+            scrub: 0.5,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -99,7 +97,7 @@ const PlatformPreview: React.FC = () => {
             invalidateOnRefresh: true,
           },
         }).fromTo(
-          maskWrap,
+          title,
           { scale: calcMobileInitialScale, immediateRender: false },
           { scale: 1, ease: 'none', force3D: true },
         );
@@ -127,10 +125,11 @@ const PlatformPreview: React.FC = () => {
 
           <div
             ref={maskWrapRef}
-            className="relative z-10 w-fit max-w-full mx-auto grid place-items-center will-change-transform md:w-full"
+            className="relative z-10 flex w-full justify-center"
           >
             <h2
-            className="mx-auto max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+              ref={titleRef}
+              className="mx-auto max-w-[9.5ch] will-change-transform md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
