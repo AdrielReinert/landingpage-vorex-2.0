@@ -63,15 +63,8 @@ const PlatformPreview: React.FC = () => {
           className="relative z-10 w-full grid place-items-center will-change-transform [backface-visibility:hidden]"
         >
           <h2
-            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-transparent px-4"
-            style={{
-              backgroundImage: "url('https://i.postimg.cc/0jWGrVX3/Screenshot-27.png')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              transform: 'translateZ(0)',
-            }}
+            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4"
+            style={{ transform: 'translateZ(0)' }}
           >
             Design que converte.
           </h2>
