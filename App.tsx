@@ -29,6 +29,26 @@ const App: React.FC = () => {
        const current = parseInt(localStorage.getItem('vexus_clicks') || '0');
        localStorage.setItem('vexus_clicks', (current + 1).toString());
     };
+
+    const trackLeadOnWhatsAppClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const link = target?.closest('a[href]') as HTMLAnchorElement | null;
+
+      if (!link) {
+        return;
+      }
+
+      const href = link.getAttribute('href') || '';
+      const isWhatsAppLink = href.includes('wa.me/') || href.includes('api.whatsapp.com/');
+
+      if (!isWhatsAppLink) {
+        return;
+      }
+
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead');
+      }
+    };
     
     // Log visit
     if (!localStorage.getItem('vexus_visit_logged')) {
@@ -38,7 +58,12 @@ const App: React.FC = () => {
     }
 
     window.addEventListener('click', handleClick);
-    return () => window.removeEventListener('click', handleClick);
+    document.addEventListener('click', trackLeadOnWhatsAppClick, true);
+
+    return () => {
+      window.removeEventListener('click', handleClick);
+      document.removeEventListener('click', trackLeadOnWhatsAppClick, true);
+    };
   }, []);
 
   if (isAdmin) {
