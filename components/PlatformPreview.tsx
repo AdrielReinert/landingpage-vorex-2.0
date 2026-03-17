@@ -45,48 +45,29 @@ const PlatformPreview: React.FC = () => {
         force3D: true,
       });
 
-      // ── [Otimização 2 + 3] Timeline com fromTo + função ──────────────────
-      // Usando fromTo com função no "from": o GSAP recalcula calcInitialScale()
-      // automaticamente a cada invalidateOnRefresh, sem valor fixo hard-coded.
-      // ease: "none" = linear exato — a escala cai proporcionalmente ao scroll,
-      // sem aceleração ou desaceleração própria no meio do caminho.
-      // scrub: 0.7 (entre 0.5–1) = leve "catch-up" quando o usuário para,
-      // sem atraso excessivo.
-      const tl = gsap.timeline({
+      // ── Timeline com fromTo + função ─────────────────────────────────────
+      // Sem onLeave/onLeaveBack: esses callbacks conflitavam com o scrub
+      // ainda em curso ao final da animação, causando o "pulo"/desaparecimento.
+      // O GSAP gerencia o estado final com fill:"both" (padrão do fromTo).
+      // immediateRender:false evita que o elemento pule para o estado "from"
+      // antes que o ScrollTrigger tenha calculado o ponto de início.
+      gsap.timeline({
         scrollTrigger: {
           id: 'design-mask-reveal',
           trigger: pinSection,
           start: 'top top',
           end: '+=1700',
-          // scrub baixo (0.2) = acompanhamento quasi-instantâneo do scroll,
-          // elimina o lag que causava conflito com scroll nativo.
-          scrub: 0.2,
+          scrub: 0.5,           // catch-up suave, sem conflito com Lenis
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true, // recalcula "from" em cada resize
-          onLeave: () => gsap.set(maskWrap, { scale: 1, force3D: true }),
-          onLeaveBack: () =>
-            gsap.set(maskWrap, { scale: calcInitialScale(), force3D: true }),
+          invalidateOnRefresh: true,
         },
       }).fromTo(
         maskWrap,
-        // ← função: chamada pelo GSAP em cada refresh (resize/orientação)
-        { scale: calcInitialScale },
+        { scale: calcInitialScale, immediateRender: false },
         { scale: 1, ease: 'none', force3D: true },
       );
-
-      // ── [Otimização 2] Listener de refresh para onLeaveBack ──────────────
-      // invalidateOnRefresh já recalcula o "from" da timeline, mas o callback
-      // onLeaveBack precisa do valor atualizado manualmente se o usuário
-      // estava no topo durante o resize.
-      ScrollTrigger.addEventListener('refresh', () => {
-        const st = tl.scrollTrigger;
-        if (st && st.progress === 0) {
-          gsap.set(maskWrap, { scale: calcInitialScale(), force3D: true });
-        }
-      });
     }, pinSection);
 
     return () => {
@@ -95,65 +76,68 @@ const PlatformPreview: React.FC = () => {
   }, []);
 
   return (
-    <section className="bg-black relative overflow-hidden">
-      {/* IMPORTANTE: sem contain:layout/paint e sem overflow:hidden aqui.
-          O ScrollTrigger usa position:fixed ao pinar — qualquer ancestor com
-          'contain' ou 'overflow:hidden' quebraria o pin prendendo o fixed
-          ao container em vez da viewport. */}
-      <div
-        ref={pinSectionRef}
-        className="relative h-screen w-full grid place-items-center"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
-
-        {/* [Otimização 1] will-change-transform (CSS) + force3D (GSAP) =
-            compositing layer dedicada na GPU — apenas transform é animado. */}
+    <>
+      {/* Seção do pin isolada: overflow-hidden recortará o texto em escala
+          grande sem afetar nenhum ancestor (ancestor com overflow-hidden
+          quebraria position:fixed do pin — aqui é o próprio elemento fixado). */}
+      <section className="bg-black relative">
         <div
-          ref={maskWrapRef}
-          className="relative z-10 w-full grid place-items-center will-change-transform"
+          ref={pinSectionRef}
+          className="relative h-screen w-full overflow-hidden grid place-items-center"
         >
-          <h2
-            className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
-            style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
-          >
-            Design que converte.
-          </h2>
-        </div>
-      </div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
-      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[28vh] md:-mt-[30vh]">
-        <div className="mb-8 text-center flex flex-col items-center">
-          <AppleSection delay={0.05}>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
-              Uma interface imersiva desenhada para maximizar o tempo de sessão e o engajamento dos jogadores.{' '}
-              <span className="text-yellow-500 font-semibold">O cassino em amostra é de um cliente real da Vorex.</span>
-            </p>
+          <div
+            ref={maskWrapRef}
+            className="relative z-10 w-full grid place-items-center will-change-transform"
+          >
+            <h2
+              className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+              style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
+            >
+              Design que converte.
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
+          whileInView do Framer Motion nem cause desaparecimento de elementos. */}
+      <section className="bg-black relative">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[28vh] md:-mt-[30vh]">
+          <div className="mb-8 text-center flex flex-col items-center">
+            <AppleSection delay={0.05}>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
+                Uma interface imersiva desenhada para maximizar o tempo de sessão e o engajamento dos jogadores.{' '}
+                <span className="text-yellow-500 font-semibold">O cassino em amostra é de um cliente real da Vorex.</span>
+              </p>
+            </AppleSection>
+          </div>
+
+          <AppleSection delay={0.12} className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8 mx-auto">
+            <div
+              className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
+              style={{ aspectRatio: frameAspectRatio }}
+            >
+              <img
+                src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
+                alt="Interface da Plataforma Vorex"
+                className="absolute inset-0 w-full h-full object-contain object-center bg-black"
+                onLoad={(event) => {
+                  const { naturalWidth, naturalHeight } = event.currentTarget;
+                  if (naturalWidth > 0 && naturalHeight > 0) {
+                    setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                  }
+                }}
+                referrerPolicy="no-referrer"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+            </div>
           </AppleSection>
         </div>
-
-        <AppleSection delay={0.12} className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] px-4 mt-8 mx-auto">
-          <div
-            className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
-            style={{ aspectRatio: frameAspectRatio }}
-          >
-            <img
-              src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
-              alt="Interface da Plataforma Vorex"
-              className="absolute inset-0 w-full h-full object-contain object-center bg-black"
-              onLoad={(event) => {
-                const { naturalWidth, naturalHeight } = event.currentTarget;
-                if (naturalWidth > 0 && naturalHeight > 0) {
-                  setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
-                }
-              }}
-              referrerPolicy="no-referrer"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-          </div>
-        </AppleSection>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
