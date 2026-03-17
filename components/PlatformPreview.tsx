@@ -31,8 +31,8 @@ const PlatformPreview: React.FC = () => {
       return Math.max(Math.ceil(ratio * 3), 8);
     }
 
-    // No mobile mantemos o mesmo comportamento visual do desktop, mas
-    // limitamos um pouco a escala para caber melhor em telas estreitas.
+    // No mobile o início precisa parecer realmente vindo do infinito,
+    // então a escala inicial é muito mais agressiva que a final legível.
     function calcMobileInitialScale(): number {
       const prev = title!.style.transform;
       title!.style.transform = 'none';
@@ -41,7 +41,7 @@ const PlatformPreview: React.FC = () => {
       title!.style.transform = prev;
 
       const ratio = Math.max(window.innerWidth / Math.max(w, 1), window.innerHeight / Math.max(h, 1));
-      return gsap.utils.clamp(4.6, 7.2, ratio * 2.6);
+      return gsap.utils.clamp(10, 18, ratio * 6.5);
     }
 
     const ctx = gsap.context(() => {
