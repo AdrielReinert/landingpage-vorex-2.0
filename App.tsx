@@ -11,7 +11,6 @@ import Concept from './components/Concept';
 import Products from './components/Products';
 import DashboardFeature from './components/DashboardFeature';
 import Profit from './components/Profit';
-import Process from './components/Process';
 import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
 import AboutUs from './components/AboutUs';
@@ -111,7 +110,6 @@ const App: React.FC = () => {
         <DashboardFeature />
         <MembersArea />
         <NetworkingGroup />
-        <Process />
         <TargetAudience />
         <AboutUs />
         <Profit />
