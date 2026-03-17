@@ -84,10 +84,10 @@ const PlatformPreview: React.FC = () => {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
             start: 'top top',
-            // Pin mais curto no mobile para aproximar rapidamente a seção abaixo.
-            end: '+=300',
-            // Scrub maior no touch = amortecimento suave sem engasgos.
-            scrub: 0.8,
+            // Pin ainda mais curto para aproximar o subtítulo sem sobreposição.
+            end: '+=240',
+            // Suave no touch, mantendo resposta rápida.
+            scrub: 0.75,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -116,7 +116,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative z-10 isolate">
         <div
           ref={pinSectionRef}
-          className="relative h-[100dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
+          className="relative h-[88dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
