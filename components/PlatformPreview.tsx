@@ -72,7 +72,7 @@ const PlatformPreview: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[20vh] md:-mt-[22vh]">
+      <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[28vh] md:-mt-[30vh]">
         <div className="mb-8 text-center flex flex-col items-center">
           <AppleSection delay={0.05}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
