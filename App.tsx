@@ -84,11 +84,11 @@ const App: React.FC = () => {
         <Hero />
         <PlatformPreview />
         <Concept />
-        <NetworkingGroup />
         <Products />
         <DashboardFeature />
         <Profit />
         <MembersArea />
+        <NetworkingGroup />
         <Process />
         <TargetAudience />
         <OnboardingForm />
