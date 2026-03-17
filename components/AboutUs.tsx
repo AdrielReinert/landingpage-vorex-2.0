@@ -7,13 +7,13 @@ const team = [
     name: 'Adriel',
     role: 'Programador, Designer & Co-fundador',
     image: 'https://i.postimg.cc/zBswFvY5/belfot-1773757574984.png',
-    bio: 'Adriel e o cara que faz acontecer no produto: programa, desenha a experiencia e transforma ideia em plataforma pronta para vender. Ele cuida para tudo ficar bonito, rapido e funcional, do visual ate a parte tecnica.',
+    bio: 'Adriel lidera o desenvolvimento de produto da Vorex, unindo programacao e design para transformar estrategias em plataformas de alta performance. Ele e responsavel por garantir uma experiencia intuitiva, estavel e orientada a conversao.',
   },
   {
     name: 'José',
     role: 'Especialista em Cassino & Co-fundador',
     image: 'https://i.postimg.cc/13vpYJZy/belfot-1769727943564.png',
-    bio: 'Jose e o cara que entende de cassino na pratica e sabe o que realmente gera resultado. Ele ajuda cada operador a montar a estrategia certa para atrair jogadores, escalar a operacao e faturar com mais consistencia.',
+    bio: 'Jose e especialista em operacao de cassinos online e estrategia de crescimento. Atua diretamente na orientacao dos clientes para estruturar campanhas, otimizar resultados e escalar o faturamento com previsibilidade.',
   },
 ];
 
