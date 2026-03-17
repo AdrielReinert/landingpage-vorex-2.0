@@ -83,8 +83,8 @@ const App: React.FC = () => {
       <main className="relative z-10 w-full flex flex-col">
         <Hero />
         <PlatformPreview />
-        <NetworkingGroup />
         <Concept />
+        <NetworkingGroup />
         <Products />
         <DashboardFeature />
         <Profit />
