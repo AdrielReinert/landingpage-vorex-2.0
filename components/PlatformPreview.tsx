@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
 const PlatformPreview: React.FC = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
 
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const maskInset = useTransform(scrollYProgress, [0.05, 0.45, 0.8], [22, 12, 0]);
+  const imageScale = useTransform(scrollYProgress, [0.05, 0.45, 0.8], [1.12, 1.05, 1]);
+  const clipMask = useMotionTemplate`inset(${maskInset}% ${maskInset}% ${maskInset}% ${maskInset}% round 1.6rem)`;
+
   return (
-    <section className="py-20 md:py-28 bg-black relative flex flex-col items-center overflow-hidden">
+    <section ref={sectionRef} className="py-20 md:py-28 bg-black relative flex flex-col items-center overflow-hidden">
       <div className="max-w-[980px] w-full px-6 z-10">
         
         <div className="mb-8 text-center flex flex-col items-center">
@@ -36,18 +46,24 @@ const PlatformPreview: React.FC = () => {
              className="rounded-[2rem] md:rounded-[2.5rem] bg-zinc-900 shadow-2xl overflow-hidden relative group border-[6px] md:border-[8px] border-zinc-800 max-h-[680px]"
              style={{ aspectRatio: frameAspectRatio }}
            >
-              <img 
-                src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif" 
-                alt="Interface da Plataforma Vorex" 
-                className="absolute inset-0 w-full h-full object-contain object-center bg-black"
-                onLoad={(event) => {
-                  const { naturalWidth, naturalHeight } = event.currentTarget;
-                  if (naturalWidth > 0 && naturalHeight > 0) {
-                    setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
-                  }
-                }}
-                referrerPolicy="no-referrer"
-              />
+              <motion.div
+                className="absolute inset-0"
+                style={{ clipPath: clipMask }}
+              >
+                <motion.img
+                  src="https://i.postimg.cc/vm3yN94m/Screen-Recording-03-17-2026-09-47-41-1-(1).gif"
+                  alt="Interface da Plataforma Vorex"
+                  className="absolute inset-0 w-full h-full object-contain object-center bg-black"
+                  style={{ scale: imageScale }}
+                  onLoad={(event) => {
+                    const { naturalWidth, naturalHeight } = event.currentTarget;
+                    if (naturalWidth > 0 && naturalHeight > 0) {
+                      setFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                    }
+                  }}
+                  referrerPolicy="no-referrer"
+                />
+              </motion.div>
               
               {/* Reflection effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
