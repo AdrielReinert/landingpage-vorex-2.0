@@ -84,8 +84,8 @@ const PlatformPreview: React.FC = () => {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
             start: 'top top',
-            // Pin ainda mais curto para aproximar o subtítulo sem sobreposição.
-            end: '+=240',
+            // Pin curto no mobile para transição rápida até a seção abaixo.
+            end: '+=200',
             // Suave no touch, mantendo resposta rápida.
             scrub: 0.75,
             pin: true,
@@ -116,7 +116,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative z-10 isolate">
         <div
           ref={pinSectionRef}
-          className="relative h-[88dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
+          className="relative h-[76dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -137,7 +137,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative z-0">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 mt-0 md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[10vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
