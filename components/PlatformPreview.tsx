@@ -76,15 +76,17 @@ const PlatformPreview: React.FC = () => {
         );
       });
 
-      mm.add('(max-width: 767px)', () => {
+      mm.add('(max-width: 768px)', () => {
         // Mobile igual ao desktop (com pin), ajustando apenas intensidade.
         gsap.timeline({
           scrollTrigger: {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
             start: 'top top',
-            end: '+=1300',
-            scrub: 0.45,
+            // Pin mais curto no mobile para aproximar rapidamente a seção abaixo.
+            end: '+=360',
+            // Scrub maior no touch = amortecimento suave sem engasgos.
+            scrub: 0.6,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -134,7 +136,7 @@ const PlatformPreview: React.FC = () => {
       {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
           whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[18vh] md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[26vh] md:-mt-[30vh]">
           <div className="mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto font-medium">
