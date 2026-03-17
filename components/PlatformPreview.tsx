@@ -97,9 +97,10 @@ const PlatformPreview: React.FC = () => {
           scrollTrigger: {
             id: 'design-mask-reveal-mobile',
             trigger: pinSection,
-            start: 'top top',
-            end: '+=300',
-            scrub: 0.5,
+            // Começa antes para evitar um bloco preto "mudo" no mobile.
+            start: 'top 82%',
+            end: '+=260',
+            scrub: 0.6,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -116,7 +117,7 @@ const PlatformPreview: React.FC = () => {
           )
           .to(
             title,
-            { autoAlpha: 1, duration: 0.12, ease: 'none' },
+            { autoAlpha: 1, duration: 0.08, ease: 'none' },
             0,
           );
       });
@@ -137,7 +138,7 @@ const PlatformPreview: React.FC = () => {
       <section className="bg-black relative z-10 md:z-0 isolate">
         <div
           ref={pinSectionRef}
-          className="relative h-[62dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
+          className="relative h-[54dvh] md:h-screen w-full overflow-hidden grid place-items-center bg-black"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
