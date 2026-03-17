@@ -6,7 +6,6 @@ import { AppleSection } from './AppleSection';
 const PlatformPreview: React.FC = () => {
   const pinSectionRef = useRef<HTMLDivElement | null>(null);
   const maskWrapRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
 
   useLayoutEffect(() => {
@@ -14,9 +13,8 @@ const PlatformPreview: React.FC = () => {
 
     const pinSection = pinSectionRef.current;
     const maskWrap = maskWrapRef.current;
-    const title = titleRef.current;
 
-    if (!pinSection || !maskWrap || !title) {
+    if (!pinSection || !maskWrap) {
       return;
     }
 
@@ -24,57 +22,27 @@ const PlatformPreview: React.FC = () => {
       ScrollTrigger.getById('design-mask-reveal')?.kill();
 
       gsap.set(maskWrap, {
-        scale: 26,
-        yPercent: 4,
-        autoAlpha: 0.9,
+        scale: 22,
         transformOrigin: '50% 50%',
-        willChange: 'transform, opacity',
+        willChange: 'transform',
       });
 
-      gsap.set(title, {
-        letterSpacing: '-0.04em',
-        textShadow: '0 0 2px rgba(255,255,255,0.72)',
-      });
-
-      const timeline = gsap.timeline({
+      gsap.timeline({
         scrollTrigger: {
           id: 'design-mask-reveal',
           trigger: pinSection,
           start: 'top top',
-          end: '+=3000',
-          scrub: 1.1,
+          end: '+=2200',
+          scrub: 0.55,
           pin: true,
           anticipatePin: 1,
           fastScrollEnd: true,
           invalidateOnRefresh: true,
         },
+      }).to(maskWrap, {
+        scale: 1,
+        ease: 'none',
       });
-
-      timeline
-        .to(maskWrap, {
-          scale: 9,
-          yPercent: 1.5,
-          autoAlpha: 0.96,
-          duration: 0.58,
-          ease: 'power2.out',
-        })
-        .to(maskWrap, {
-          scale: 1,
-          yPercent: 0,
-          autoAlpha: 1,
-          duration: 0.42,
-          ease: 'power3.out',
-        })
-        .to(
-          title,
-          {
-            letterSpacing: '-0.03em',
-            textShadow: '0 0 1px rgba(255,255,255,0.9)',
-            duration: 1,
-            ease: 'power2.out',
-          },
-          0
-        );
     }, pinSection);
 
     return () => {
@@ -95,7 +63,6 @@ const PlatformPreview: React.FC = () => {
           className="relative z-10 w-full grid place-items-center will-change-transform"
         >
           <h2
-            ref={titleRef}
             className="text-[clamp(2rem,8vw,7rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-none tracking-[-0.03em] text-center text-white px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
             style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
           >
