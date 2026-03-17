@@ -54,20 +54,22 @@ const Products: React.FC = () => {
              </div>
              <div className="mt-8 flex justify-center relative">
                 <div
-                  className="w-full max-w-[220px] bg-black border-4 border-zinc-800 rounded-[2rem] shadow-2xl relative overflow-hidden"
+                  className="w-full max-w-[240px] rounded-[2.2rem] bg-zinc-950 border-[5px] border-zinc-700 shadow-2xl relative overflow-hidden"
                   style={{ aspectRatio: mobileFrameAspectRatio }}
                 >
-                   <img
-                     src="https://i.postimg.cc/3wRLBDmx/IMG-8219.png"
-                     alt="Preview mobile da plataforma"
-                     className="absolute inset-0 w-full h-full object-contain object-center bg-zinc-900"
-                     onLoad={(event) => {
-                       const { naturalWidth, naturalHeight } = event.currentTarget;
-                       if (naturalWidth > 0 && naturalHeight > 0) {
-                         setMobileFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
-                       }
-                     }}
-                   />
+                   <div className="absolute inset-[4px] rounded-[1.8rem] overflow-hidden bg-black">
+                      <img
+                        src="https://i.postimg.cc/3wRLBDmx/IMG-8219.png"
+                        alt="Preview mobile da plataforma"
+                        className="absolute inset-0 w-full h-full object-cover object-top"
+                        onLoad={(event) => {
+                          const { naturalWidth, naturalHeight } = event.currentTarget;
+                          if (naturalWidth > 0 && naturalHeight > 0) {
+                            setMobileFrameAspectRatio(`${naturalWidth} / ${naturalHeight}`);
+                          }
+                        }}
+                      />
+                   </div>
                 </div>
              </div>
           </AppleSection>
