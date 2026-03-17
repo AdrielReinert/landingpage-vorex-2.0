@@ -44,9 +44,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Apple-style smooth scrolling */
+/* scroll-behavior: smooth removido — conflitava com GSAP ScrollTrigger.
+   A suavização de scroll é gerenciada pelo parâmetro scrub do ScrollTrigger. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 .text-gradient {

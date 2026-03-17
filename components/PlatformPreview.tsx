@@ -58,7 +58,9 @@ const PlatformPreview: React.FC = () => {
           trigger: pinSection,
           start: 'top top',
           end: '+=1700',
-          scrub: 0.7,
+          // scrub baixo (0.2) = acompanhamento quasi-instantâneo do scroll,
+          // elimina o lag que causava conflito com scroll nativo.
+          scrub: 0.2,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
