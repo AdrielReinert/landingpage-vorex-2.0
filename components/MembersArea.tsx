@@ -20,7 +20,7 @@ const MembersArea: React.FC = () => {
           </AppleSection>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-6 items-center">
           <AppleSection className="bg-zinc-900/50 rounded-3xl p-8 md:p-10 hover:bg-zinc-900 transition-colors">
             <h3 className="text-3xl md:text-4xl font-semibold text-white mb-6 tracking-tight">
               O que voce encontra dentro da area de membros
@@ -41,7 +41,7 @@ const MembersArea: React.FC = () => {
             </ul>
           </AppleSection>
 
-          <AppleSection delay={0.2} className="flex justify-center lg:justify-end">
+          <AppleSection delay={0.2} className="flex justify-center lg:justify-center">
             <div
               className="w-full max-w-[280px] bg-zinc-950 border-[6px] border-zinc-800 rounded-[2.4rem] shadow-2xl relative overflow-hidden"
               style={{ aspectRatio: frameAspectRatio }}
