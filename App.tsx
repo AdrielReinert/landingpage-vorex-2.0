@@ -9,7 +9,6 @@ import PlatformPreview from './components/PlatformPreview';
 import NetworkingGroup from './components/NetworkingGroup';
 import Concept from './components/Concept';
 import Products from './components/Products';
-import DashboardFeature from './components/DashboardFeature';
 import Profit from './components/Profit';
 import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
@@ -107,7 +106,6 @@ const App: React.FC = () => {
         <Products />
         <Concept />
         <PlatformPreview />
-        <DashboardFeature />
         <MembersArea />
         <NetworkingGroup />
         <TargetAudience />
