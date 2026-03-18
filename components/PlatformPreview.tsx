@@ -1,111 +1,20 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState } from 'react';
 import { AppleSection } from './AppleSection';
 
 const PlatformPreview: React.FC = () => {
-  const pinSectionRef = useRef<HTMLDivElement | null>(null);
-  const maskWrapRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 16');
-
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const pinSection = pinSectionRef.current;
-    const maskWrap = maskWrapRef.current;
-    const title = titleRef.current;
-
-    if (!pinSection || !maskWrap || !title) return;
-
-    // Mede o tamanho natural do elemento (scale=1) e calcula a escala máxima
-    // necessária para o desktop cobrir a viewport com folga.
-    function calcDesktopInitialScale(): number {
-      const prev = title!.style.transform;
-      title!.style.transform = 'none';
-      const w = title!.offsetWidth;
-      const h = title!.offsetHeight;
-      title!.style.transform = prev;
-
-      const ratio = Math.max(window.innerWidth / w, window.innerHeight / h);
-      return Math.max(Math.ceil(ratio * 3), 8);
-    }
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.getById('design-mask-reveal-desktop')?.kill();
-      ScrollTrigger.getById('design-mask-reveal-mobile')?.kill();
-
-      // ── [Otimização 1] GPU: configura compositing layer dedicada ─────────
-      // force3D instrui o GSAP a manter translate3d ativo (promove o elemento
-      // para a GPU). willChange sinaliza ao browser para alocar a camada
-      // antecipadamente — somente transform é animado, nunca width/height.
-      gsap.set(title, {
-        transformOrigin: '50% 50%',
-        force3D: true,
-      });
-
-      const mm = gsap.matchMedia();
-
-      mm.add('(min-width: 768px)', () => {
-        gsap.set(title, {
-          scale: calcDesktopInitialScale(),
-          force3D: true,
-        });
-
-        gsap.timeline({
-          scrollTrigger: {
-            id: 'design-mask-reveal-desktop',
-            trigger: pinSection,
-            start: 'top top',
-            end: '+=1700',
-            scrub: 0.5,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        }).fromTo(
-          title,
-          { scale: calcDesktopInitialScale },
-          { scale: 1, ease: 'none', force3D: true },
-        );
-      });
-
-      mm.add('(max-width: 768px)', () => {
-        gsap.set(title, {
-          scale: 1,
-          autoAlpha: 1,
-          force3D: true,
-        });
-      });
-
-      return () => mm.revert();
-    }, pinSection);
-
-    return () => {
-      ctx.revert();
-    };
-  }, []);
 
   return (
     <>
-      {/* Seção do pin isolada: overflow-hidden recortará o texto em escala
-          grande sem afetar nenhum ancestor (ancestor com overflow-hidden
-          quebraria position:fixed do pin — aqui é o próprio elemento fixado). */}
       <section className="bg-black relative z-10 md:z-0 isolate">
         <div
-          ref={pinSectionRef}
           className="relative min-h-[38vh] md:h-screen w-full overflow-hidden grid place-items-center bg-black pt-14 pb-8 md:py-0"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
-          <div
-            ref={maskWrapRef}
-            className="relative z-10 flex w-full justify-center"
-          >
+          <div className="relative z-10 flex w-full justify-center">
             <h2
-              ref={titleRef}
-              className="mx-auto max-w-[9.5ch] will-change-transform md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
+              className="mx-auto max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
               style={{ WebkitTextFillColor: '#fff', color: '#fff' }}
             >
               Design que converte.
@@ -114,8 +23,6 @@ const PlatformPreview: React.FC = () => {
         </div>
       </section>
 
-      {/* Conteúdo separado do pin: garante que pinSpacing não interfira no
-          whileInView do Framer Motion nem cause desaparecimento de elementos. */}
       <section className="bg-black relative z-20 md:z-20">
         <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[8vh] md:-mt-[30vh]">
           <div className="mb-10 md:mb-8 text-center flex flex-col items-center">
