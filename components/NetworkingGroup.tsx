@@ -35,12 +35,6 @@ const NetworkingGroup: React.FC = () => {
                 </div>
               ))}
             </div>
-
-            <div className="mt-8 p-6 bg-zinc-800/50 rounded-2xl border border-yellow-500/20">
-              <p className="text-gray-300 text-sm leading-relaxed">
-                <strong className="text-white">Acesso imediato ao grupo de WhatsApp</strong> com operadores ativos, suporte direto e transmissões ao vivo mostrando resultados reais da plataforma.
-              </p>
-            </div>
           </AppleSection>
 
           <AppleSection delay={0.2} className="flex justify-center lg:justify-center lg:order-1">
