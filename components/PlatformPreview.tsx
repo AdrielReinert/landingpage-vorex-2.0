@@ -10,8 +10,6 @@ const PlatformPreview: React.FC = () => {
         <div
           className="relative min-h-[26vh] md:min-h-[52vh] w-full overflow-hidden grid place-items-center bg-black pt-8 pb-4 md:pt-10 md:pb-8"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
-
           <div className="relative z-10 flex w-full justify-center">
             <h2
               className="mx-auto max-w-[9.5ch] md:max-w-none text-[clamp(1.75rem,11.2vw,3.25rem)] md:text-[clamp(2rem,7vw,7.2rem)] font-black leading-[1.04] tracking-[-0.03em] text-center text-white px-5 md:px-4 [text-shadow:0_0_1px_rgba(255,255,255,0.9)]"
