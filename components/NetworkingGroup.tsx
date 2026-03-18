@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AppleSection } from './AppleSection';
-import { TextReveal } from './TextReveal';
 
 const NetworkingGroup: React.FC = () => {
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 19.5');
@@ -8,17 +7,6 @@ const NetworkingGroup: React.FC = () => {
   return (
     <section className="py-20 md:py-32 bg-black relative overflow-hidden">
       <div className="max-w-[980px] mx-auto px-6">
-        <div className="mb-12 md:mb-16 text-center flex flex-col items-center">
-          <TextReveal className="text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tight justify-center">
-            Comunidade exclusiva de operadores.
-          </TextReveal>
-          <AppleSection delay={0.2}>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto font-medium">
-              Acesso a um grupo VIP no WhatsApp onde operadores compartilham estratégias reais, dicas valiosas e resultados práticos da plataforma.
-            </p>
-          </AppleSection>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,560px)_minmax(0,280px)] gap-8 lg:gap-6 items-center lg:justify-center">
           <AppleSection className="bg-zinc-900/50 rounded-3xl p-8 md:p-10 hover:bg-zinc-900 transition-colors">
             <span className="text-yellow-500 font-medium text-xs uppercase tracking-widest mb-6 block">
