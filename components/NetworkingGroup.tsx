@@ -44,7 +44,7 @@ const NetworkingGroup: React.FC = () => {
             >
               <div className="absolute inset-[4px] rounded-[2rem] overflow-hidden bg-black">
                 <img
-                  src="https://i.postimg.cc/qv5n4qD7/IMG-8220.jpg"
+                  src="https://i.postimg.cc/G905VcLV/Design-sem-nome-(2).png"
                   alt="Grupo de networking WhatsApp"
                   className="absolute inset-0 w-full h-full object-contain object-center bg-black"
                   onLoad={(event) => {
