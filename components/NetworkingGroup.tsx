@@ -7,7 +7,7 @@ const NetworkingGroup: React.FC = () => {
   return (
     <section className="py-20 md:py-32 bg-black relative overflow-hidden">
       <div className="max-w-[980px] mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,560px)_minmax(0,280px)] gap-8 lg:gap-6 items-center lg:justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,280px)_minmax(0,560px)] gap-8 lg:gap-6 items-center lg:justify-center">
           <AppleSection className="bg-zinc-900/50 rounded-3xl p-8 md:p-10 hover:bg-zinc-900 transition-colors lg:order-2">
             <span className="text-yellow-500 font-medium text-xs uppercase tracking-widest mb-6 block">
               Networking
