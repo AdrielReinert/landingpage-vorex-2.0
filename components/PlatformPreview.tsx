@@ -8,7 +8,7 @@ const PlatformPreview: React.FC = () => {
     <>
       <section className="bg-black relative z-10 md:z-0 isolate">
         <div
-          className="relative min-h-[38vh] md:h-screen w-full overflow-hidden grid place-items-center bg-black pt-14 pb-8 md:py-0"
+          className="relative min-h-[26vh] md:min-h-[52vh] w-full overflow-hidden grid place-items-center bg-black pt-8 pb-4 md:pt-10 md:pb-8"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#0d0d0d_0%,_#000_70%)] z-0"></div>
 
@@ -24,7 +24,7 @@ const PlatformPreview: React.FC = () => {
       </section>
 
       <section className="bg-black relative z-20 md:z-20">
-        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[8vh] md:-mt-[30vh]">
+        <div className="max-w-[980px] w-full mx-auto px-6 pb-20 md:pb-28 -mt-[2vh] md:-mt-[12vh]">
           <div className="mb-10 md:mb-8 text-center flex flex-col items-center">
             <AppleSection delay={0.05}>
               <p className="text-lg leading-relaxed text-gray-400 max-w-2xl mx-auto font-medium md:text-xl">
