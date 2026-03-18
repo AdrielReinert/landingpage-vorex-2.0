@@ -17,7 +17,7 @@ const NetworkingGroup: React.FC = () => {
             </h2>
 
             <p className="text-gray-400 text-lg leading-relaxed mb-6 font-medium">
-              Faça parte de um ecossistema onde quem está rodando com a plataforma compartilha experiências reais, dúvidas e estratégias que funcionam.
+              Entre em um grupo de WhatsApp com operadores que já usam a plataforma e compartilham experiências reais, dúvidas do dia a dia e estratégias que funcionam.
             </p>
 
             <div className="space-y-4">
