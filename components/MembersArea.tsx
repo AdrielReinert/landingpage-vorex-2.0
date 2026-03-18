@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AppleSection } from './AppleSection';
-import { TextReveal } from './TextReveal';
 
 const MembersArea: React.FC = () => {
   const [frameAspectRatio, setFrameAspectRatio] = useState('9 / 19.5');
@@ -8,22 +7,10 @@ const MembersArea: React.FC = () => {
   return (
     <section className="py-20 md:py-32 bg-black relative overflow-hidden">
       <div className="max-w-[980px] mx-auto px-6">
-        <div className="mb-12 md:mb-16 text-center flex flex-col items-center">
-          <TextReveal className="text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tight justify-center">
-            Area de membros exclusiva.
-          </TextReveal>
-          <AppleSection delay={0.2}>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto font-medium">
-              Todo aluno recebe acesso a aulas praticas para aprender a operar o cassino,
-              organizar a rotina e escalar o faturamento com metodo.
-            </p>
-          </AppleSection>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,560px)_minmax(0,280px)] gap-8 lg:gap-6 items-center lg:justify-center">
           <AppleSection className="bg-zinc-900/50 rounded-3xl p-8 md:p-10 hover:bg-zinc-900 transition-colors">
             <h3 className="text-3xl md:text-4xl font-semibold text-white mb-6 tracking-tight">
-              O que voce encontra dentro da area de membros
+              Área de membros exclusiva.
             </h3>
 
             <ul className="space-y-4">
