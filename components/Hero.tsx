@@ -121,7 +121,7 @@ const Hero: React.FC = () => {
             A Vorex quebrou a barreira de entrada para você ter sua própria Casa de Apostas.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
+          <div className="flex w-full justify-center">
             <div className="flex w-full flex-col items-center sm:w-auto">
               <button 
                 onClick={() => document.getElementById('concept')?.scrollIntoView({ behavior: 'smooth' })}
@@ -135,13 +135,6 @@ const Hero: React.FC = () => {
                 +60 cassinos online ativos
               </span>
             </div>
-
-            <button 
-              onClick={() => document.getElementById('profit')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex h-14 items-center justify-center rounded-full px-8 font-medium text-white transition-colors hover:text-gray-300 w-full sm:w-auto"
-            >
-              Entenda o Modelo
-            </button>
           </div>
         </AppleSection>
 
