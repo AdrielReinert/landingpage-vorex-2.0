@@ -77,8 +77,8 @@ const Products: React.FC = () => {
           {/* Small Card - Global */}
           <AppleSection delay={0.4} className="md:col-span-2 bg-zinc-900/50 rounded-3xl p-8 hover:bg-zinc-900/80 transition-colors">
              <h3 className="text-xl font-semibold text-white mb-2">Escala sem limites.</h3>
-             <p className="max-w-4xl text-gray-400 text-base leading-relaxed md:text-lg">
-               Sua operação precisa crescer com confiança, não com medo de travar no momento em que o faturamento começa a acelerar. Com a infraestrutura da Vorex, você tem estabilidade para suportar grandes volumes de jogadores, campanhas agressivas e picos de acesso sem perder vendas, sem frustrar usuários e sem ver oportunidades escapando na hora mais importante.
+             <p className="text-gray-400 text-sm">
+               Crescimento sem travas. Infraestrutura elástica que suporta picos massivos de jogadores simultâneos sem derrubar sua operação.
              </p>
           </AppleSection>
 
