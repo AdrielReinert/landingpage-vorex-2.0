@@ -17,10 +17,10 @@ const Concept: React.FC = () => {
            </span>
            <div className="mb-8">
              <TextReveal className="text-4xl md:text-5xl font-semibold text-white leading-tight tracking-tight justify-start">
-               Não construa.
+               Sua Marca.
              </TextReveal>
              <TextReveal className="text-4xl md:text-5xl font-semibold text-gray-500 leading-tight tracking-tight justify-start" delay={0.2}>
-               Compre pronto.
+               Sua Operação.
              </TextReveal>
            </div>
            <p className="text-gray-400 text-lg leading-relaxed mb-8 font-medium">
