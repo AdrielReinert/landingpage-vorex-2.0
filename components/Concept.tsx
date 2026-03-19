@@ -24,10 +24,10 @@ const Concept: React.FC = () => {
              </TextReveal>
            </div>
            <p className="text-gray-400 text-lg leading-relaxed mb-8 font-medium">
-             O tempo que você perde tentando entender a tecnologia é o mesmo tempo que seus concorrentes usam para lucrar. O mercado não espera.
+             Desenvolvida por quem realmente entende do mercado de iGaming, a Vorex te entrega tudo o que é necessário para você ter sua banca rodando e faturando.
            </p>
            <p className="text-gray-400 text-lg leading-relaxed mb-8">
-             A <strong>Vorex</strong> elimina a barreira técnica. Entregamos uma estrutura de alto nível, testada e validada. <strong className="text-white">Seu único trabalho é faturar.</strong>
+             Você recebe uma plataforma profissional, validada e com o suporte de quem conhece o jogo de ponta a ponta. <strong className="text-white">Seu único trabalho é faturar.</strong>
            </p>
            
            <div className="flex flex-col gap-6 border-l-2 border-zinc-800 pl-6">
