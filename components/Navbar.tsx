@@ -11,8 +11,6 @@ const Navbar: React.FC = () => {
     });
   }, [scrollY]);
 
-  const whatsappLink = "https://wa.me/5547988700032?text=Quero%20montar%20meu%20cassino";
-
   return (
     <motion.nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass-nav h-12' : 'bg-transparent h-16'}`}
@@ -35,19 +33,6 @@ const Navbar: React.FC = () => {
           <a href="#products" className="hover:text-white transition-colors">Recursos</a>
           <a href="#profit" className="hover:text-white transition-colors">Lucratividade</a>
         </div>
-
-        {/* Action Button */}
-        <div>
-          <a 
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-yellow-500 hover:bg-yellow-400 text-black text-xs px-3 py-1 rounded-full transition-colors font-medium"
-          >
-            Falar com Especialista
-          </a>
-        </div>
-
       </div>
     </motion.nav>
   );
