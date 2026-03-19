@@ -75,7 +75,7 @@ const Products: React.FC = () => {
           </AppleSection>
 
           {/* Small Card - Global */}
-          <AppleSection delay={0.4} className="bg-zinc-900/50 rounded-3xl p-8 hover:bg-zinc-900/80 transition-colors">
+          <AppleSection delay={0.4} className="md:col-span-2 bg-zinc-900/50 rounded-3xl p-8 hover:bg-zinc-900/80 transition-colors">
              <h3 className="text-xl font-semibold text-white mb-2">Escala sem limites.</h3>
              <p className="text-gray-400 text-sm">
                Crescimento sem travas. Infraestrutura elástica que suporta picos massivos de jogadores simultâneos sem derrubar sua operação.
