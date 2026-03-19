@@ -122,14 +122,20 @@ const Hero: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
-            <button 
-              onClick={() => document.getElementById('concept')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-yellow-400 to-yellow-600 px-8 font-medium text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] w-full sm:w-auto border border-yellow-300/50"
-            >
-              <span className="mr-2 text-lg font-bold">Iniciar Meu Projeto</span>
-              <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
-            </button>
-            
+            <div className="flex w-full flex-col items-center sm:w-auto">
+              <button 
+                onClick={() => document.getElementById('concept')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-yellow-400 to-yellow-600 px-8 font-medium text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] w-full sm:w-auto border border-yellow-300/50"
+              >
+                <span className="mr-2 text-lg font-bold">Iniciar Meu Projeto</span>
+                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+              </button>
+
+              <span className="mt-3 text-center text-sm font-medium text-gray-300">
+                +60 cassinos online ativos
+              </span>
+            </div>
+
             <button 
               onClick={() => document.getElementById('profit')?.scrollIntoView({ behavior: 'smooth' })}
               className="inline-flex h-14 items-center justify-center rounded-full px-8 font-medium text-white transition-colors hover:text-gray-300 w-full sm:w-auto"
