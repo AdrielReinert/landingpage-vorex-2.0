@@ -74,14 +74,6 @@ const Products: React.FC = () => {
              </div>
           </AppleSection>
 
-          {/* Small Card - Security */}
-          <AppleSection delay={0.3} className="bg-zinc-900/50 rounded-3xl p-8 hover:bg-zinc-900/80 transition-colors">
-             <h3 className="text-xl font-semibold text-white mb-2">Cofre impenetrável.</h3>
-             <p className="text-gray-400 text-sm">
-               Seu caixa protegido 24/7. Criptografia de nível bancário e escudo anti-DDoS militar para você focar apenas em lucrar.
-             </p>
-          </AppleSection>
-
           {/* Small Card - Global */}
           <AppleSection delay={0.4} className="bg-zinc-900/50 rounded-3xl p-8 hover:bg-zinc-900/80 transition-colors">
              <h3 className="text-xl font-semibold text-white mb-2">Escala sem limites.</h3>
