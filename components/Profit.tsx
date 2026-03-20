@@ -83,20 +83,6 @@ const Profit: React.FC = () => {
                         Quando os jogadores apostam e perdem, o dinheiro fica com a banca (você). Com um bom volume de jogadores, o lucro é estatístico e previsível.
                       </p>
                     </div>
-
-                    {/* Bloco 2: Taxas */}
-                    <div className="relative z-10 pt-6 border-t border-white/5">
-                      <h3 className="text-white font-semibold text-xl mb-3 flex items-center gap-3">
-                        Tem taxas?
-                      </h3>
-                      
-                      <div className="bg-black/50 p-5 rounded-2xl">
-                         <p className="text-gray-300 text-sm font-medium">
-                            Existe apenas uma pequena taxa sobre as transações (saques/depósitos).
-                         </p>
-                      </div>
-                    </div>
-
                 </div>
               </div>
            </AppleSection>
