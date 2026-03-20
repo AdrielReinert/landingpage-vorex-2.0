@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Wallet, CalendarCheck, TrendingUp, Layers, Users } from 'lucide-react';
+import { Wallet, CalendarCheck, TrendingUp, Layers, Users, ArrowRight } from 'lucide-react';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
@@ -55,14 +55,15 @@ const Profit: React.FC = () => {
                 ))}
              </ul>
 
-             <div className="mt-8">
+             <div className="mt-8 flex justify-center">
                 <a
                   href="https://wa.me/5547988700032?text=Quero%20montar%20meu%20cassino"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-yellow-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-yellow-400"
+                  className="group relative inline-flex min-h-14 w-full items-center justify-center overflow-hidden rounded-full border border-yellow-300/50 bg-gradient-to-b from-yellow-400 to-yellow-600 px-8 py-3 text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] sm:w-auto"
                 >
-                  Falar com o consultor
+                  <span className="mr-2 text-lg font-bold">Falar com o consultor</span>
+                  <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
                 </a>
              </div>
            </AppleSection>
