@@ -33,7 +33,7 @@ const Concept: React.FC = () => {
            <div className="flex flex-col gap-6 border-l-2 border-zinc-800 pl-6">
               <div className="flex flex-col">
                   <strong className="text-white text-lg font-semibold mb-1">Acompanhamento Especializado</strong>
-                  <span className="text-gray-500 text-sm">Você não joga sozinho. Tenha nosso suporte direto para tirar dúvidas, receber orientações e garantir que sua operação cresça no caminho certo.</span>
+                    <span className="text-gray-500 text-sm">Tenha nosso suporte direto para tirar dúvidas e orientar sua jornada.</span>
               </div>
               <div className="flex flex-col">
                  <strong className="text-white text-lg font-semibold mb-1">Operação Fluida e Segura</strong>
