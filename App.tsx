@@ -13,7 +13,6 @@ import Profit from './components/Profit';
 import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
 import AboutUs from './components/AboutUs';
-import OnboardingForm from './components/OnboardingForm';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
@@ -111,7 +110,6 @@ const App: React.FC = () => {
         <TargetAudience />
         <AboutUs />
         <Profit />
-        <OnboardingForm />
         <FAQ />
       </main>
       
