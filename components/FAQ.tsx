@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MessageCircle, ChevronRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { AppleSection } from './AppleSection';
 
 interface FAQItem {
@@ -33,7 +33,6 @@ const faqs: FAQItem[] = [
 
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const whatsappLink = "https://wa.me/5547988700032?text=Tenho%20uma%20dúvida%20específica";
 
   return (
     <section id="faq" className="py-20 md:py-32 bg-black relative overflow-hidden">
@@ -85,17 +84,6 @@ const FAQ: React.FC = () => {
         {/* Final CTA */}
         <AppleSection className="mt-24 text-center">
             <h2 className="text-3xl font-semibold text-white mb-8 tracking-tight">Pronto para começar?</h2>
-            <a 
-              href={whatsappLink}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-medium px-8 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg shadow-yellow-900/30"
-            >
-              <MessageCircle size={24} />
-              <span>Falar com Consultor</span>
-              <ChevronRight size={20} className="opacity-70" />
-            </a>
-            <p className="mt-6 text-gray-500 text-sm font-medium">Resposta imediata no WhatsApp.</p>
         </AppleSection>
       </div>
     </section>
