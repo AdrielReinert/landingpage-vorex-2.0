@@ -54,6 +54,17 @@ const Profit: React.FC = () => {
                   </li>
                 ))}
              </ul>
+
+             <div className="mt-8">
+                <a
+                  href="https://wa.me/5547988700032?text=Quero%20montar%20meu%20cassino"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-yellow-500 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-yellow-400"
+                >
+                  Falar com o consultor
+                </a>
+             </div>
            </AppleSection>
 
            {/* Coluna da Direita: Como o dinheiro entra */}
