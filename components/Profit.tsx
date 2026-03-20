@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Wallet, CalendarCheck, TrendingUp, Layers, Users, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
@@ -39,22 +38,6 @@ const Profit: React.FC = () => {
                    </p>
                 </div>
              </div>
-
-             <ul className="space-y-4">
-                {[
-                  { icon: Wallet, text: "Você não paga aluguel do software" },
-                  { icon: CalendarCheck, text: "Sem surpresas no fim do mês" },
-                  { icon: TrendingUp, text: "Lucro das apostas vai para você" },
-                  { icon: Layers, text: "Estrutura completa inclusa" },
-                  { icon: Users, text: "Acesso ao Grupo de Networking" }
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-300 font-medium">
-                    <item.icon className="text-yellow-500" size={20} />
-                    {item.text}
-                  </li>
-                ))}
-             </ul>
-
            </AppleSection>
 
            {/* Coluna da Direita: Como o dinheiro entra */}
@@ -63,15 +46,11 @@ const Profit: React.FC = () => {
               className="relative"
            >
               <div className="w-full bg-zinc-900/50 rounded-3xl overflow-hidden shadow-2xl relative group hover:bg-zinc-900 transition-colors">
-                
-                {/* Header Visual */}
                 <div className="bg-zinc-900 px-6 py-4 border-b border-white/5 flex items-center justify-between">
                     <span className="font-mono text-xs text-gray-500 uppercase tracking-widest">RESUMO FINANCEIRO</span>
                 </div>
 
                 <div className="p-8 space-y-8 relative">
-                    
-                    {/* Bloco 1: A Casa Ganha */}
                     <div className="relative z-10">
                       <h3 className="text-white font-semibold text-xl mb-3 flex items-center gap-3">
                         Como você ganha dinheiro?
