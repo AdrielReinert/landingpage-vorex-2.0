@@ -15,15 +15,15 @@ const Profit: React.FC = () => {
           </TextReveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
            
            {/* Coluna da Esquerda: Investimento */}
-           <AppleSection>
-             <div className="bg-zinc-900 p-8 rounded-3xl mb-8 shadow-2xl relative overflow-hidden group">
+            <AppleSection className="h-full">
+             <div className="relative h-full overflow-hidden rounded-3xl bg-zinc-900 p-8 shadow-2xl group">
                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 </div>
 
-                <div className="relative z-10">
+               <div className="relative z-10 flex h-full flex-col">
                    <div className="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
                       Oferta Limitada
@@ -33,7 +33,7 @@ const Profit: React.FC = () => {
                    </div>
                    <div className="text-sm text-gray-400 font-medium mb-6">Taxa única de setup. Sem mensalidade.</div>
                    
-                   <p className="text-gray-300 leading-relaxed border-t border-white/10 pt-6 font-medium">
+                   <p className="border-t border-white/10 pt-6 font-medium leading-relaxed text-gray-300">
                      No mercado, uma estrutura completa custa entre R$ 2.000 e R$ 5.000. A Vorex cobra menos por um motivo estratégico: <strong>Nós também somos o Banco.</strong> Ganhamos com o seu crescimento.
                    </p>
                 </div>
@@ -43,14 +43,14 @@ const Profit: React.FC = () => {
            {/* Coluna da Direita: Como o dinheiro entra */}
            <AppleSection
               delay={0.2}
-              className="relative"
+              className="relative h-full"
            >
-              <div className="w-full bg-zinc-900/50 rounded-3xl overflow-hidden shadow-2xl relative group hover:bg-zinc-900 transition-colors">
+              <div className="relative h-full w-full overflow-hidden rounded-3xl bg-zinc-900/50 shadow-2xl group transition-colors hover:bg-zinc-900">
                 <div className="bg-zinc-900 px-6 py-4 border-b border-white/5 flex items-center justify-between">
                     <span className="font-mono text-xs text-gray-500 uppercase tracking-widest">RESUMO FINANCEIRO</span>
                 </div>
 
-                <div className="p-8 space-y-8 relative">
+                <div className="relative h-[calc(100%-57px)] p-8 space-y-8">
                     <div className="relative z-10">
                       <h3 className="text-white font-semibold text-xl mb-3 flex items-center gap-3">
                         Como você ganha dinheiro?
