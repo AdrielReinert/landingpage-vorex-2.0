@@ -31,7 +31,6 @@ const Profit: React.FC = () => {
                    <div className="flex items-baseline gap-2 mb-2">
                      <span className="text-6xl font-semibold text-white tracking-tighter">R$ 997,00</span>
                    </div>
-                   <div className="text-sm text-gray-400 font-medium mb-6">Taxa única de setup. Sem mensalidade.</div>
                    
                    <p className="border-t border-white/10 pt-6 font-medium leading-relaxed text-gray-300">
                      No mercado, uma estrutura completa custa entre R$ 2.000 e R$ 5.000. A Vorex cobra menos por um motivo estratégico: <strong>Nós também somos o Banco.</strong> Ganhamos com o seu crescimento.
