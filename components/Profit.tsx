@@ -29,7 +29,7 @@ const Profit: React.FC = () => {
                       Oferta Limitada
                    </div>
                    <div className="flex items-baseline gap-2 mb-2">
-                     <span className="text-6xl font-semibold text-white tracking-tighter">R$ 499,00</span>
+                     <span className="text-6xl font-semibold text-white tracking-tighter">R$ 997,00</span>
                    </div>
                    <div className="text-sm text-gray-400 font-medium mb-6">Taxa única de setup. Sem mensalidade.</div>
                    

@@ -138,7 +138,7 @@ const scriptData: Record<number, { messages: ScriptMessageContent[]; options: Op
   100: {
     messages: [
       "Trabalhamos com transparência total. Aqui estão os números:",
-      "**Investimento Único:**\nVocê paga apenas **R$ 499,00** para ativar sua plataforma.\n🚫 Sem mensalidades.\n🚫 Sem aluguel de software.",
+      "**Investimento Único:**\nVocê paga apenas **R$ 997,00** para ativar sua plataforma.\n🚫 Sem mensalidades.\n🚫 Sem aluguel de software.",
       "**Taxas do Gateway:**\nAs taxas operacionais são informadas diretamente pelo nosso consultor via WhatsApp, garantindo a melhor condição para o seu perfil.",
       "O restante é **LUCRO SEU**."
     ],
