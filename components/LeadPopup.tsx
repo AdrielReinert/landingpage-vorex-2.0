@@ -112,7 +112,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
             <div
-              className="relative w-full max-w-md pointer-events-auto rounded-3xl bg-zinc-900 border border-white/10 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-md pointer-events-auto rounded-3xl bg-zinc-900 border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Glow accent top */}
@@ -124,13 +124,13 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
               {/* Fechar */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors duration-200 z-10 p-1 rounded-full hover:bg-white/10"
+                className="absolute top-5 right-5 text-gray-400 hover:text-white transition-colors duration-200 z-20 p-2 rounded-full hover:bg-white/10"
                 aria-label="Fechar"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
 
-              <div className="p-8 relative z-10">
+              <div className="p-8 pt-12 relative z-10">
                 {/* Headline */}
                 <h2 className="text-white text-2xl font-bold tracking-tight leading-tight mb-2">
                   Você está pronto para adquirir seu cassino por apenas{' '}
