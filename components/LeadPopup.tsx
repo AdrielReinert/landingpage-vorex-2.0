@@ -79,7 +79,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
       `Olá! Tenho interesse em adquirir meu cassino por R$ 997. Meu e-mail: ${email}`
     );
 
-    const webhookUrl = 'COLE_AQUI_A_URL_DO_SEU_LOVABLE';
+    const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
 
     const irParaWhatsApp = () => {
       window.open(`https://wa.me/${numeroWhatsapp}?text=${mensagem}`, '_blank', 'noopener,noreferrer');
