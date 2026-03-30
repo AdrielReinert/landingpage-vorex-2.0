@@ -131,12 +131,6 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
               </button>
 
               <div className="p-8 relative z-10">
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 rounded-full bg-yellow-500/10 border border-yellow-400/20 px-3 py-1 mb-5">
-                  <span className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse" />
-                  <span className="text-yellow-400 text-xs font-bold uppercase tracking-widest">Oferta Limitada</span>
-                </div>
-
                 {/* Headline */}
                 <h2 className="text-white text-2xl font-bold tracking-tight leading-tight mb-2">
                   Você está pronto para adquirir seu cassino por apenas{' '}
