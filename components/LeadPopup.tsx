@@ -101,6 +101,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
       body: JSON.stringify({
         nome: nome.trim(),
         telefone: whatsapp,
+        email: email.trim(),
         fbc_value: fbc,
       }),
     })
