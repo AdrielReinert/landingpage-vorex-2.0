@@ -8,10 +8,11 @@ interface LeadPopupProps {
 }
 
 const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; whatsapp?: string }>({});
+  const [errors, setErrors] = useState<{ nome?: string; email?: string; whatsapp?: string }>({});
 
   // Bloqueia scroll do body quando popup está aberto
   useEffect(() => {
@@ -40,7 +41,10 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
   };
 
   const validate = () => {
-    const newErrors: { email?: string; whatsapp?: string } = {};
+    const newErrors: { nome?: string; email?: string; whatsapp?: string } = {};
+    if (!nome.trim() || nome.trim().length < 2) {
+      newErrors.nome = 'Digite seu nome.';
+    }
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       newErrors.email = 'Digite um e-mail válido.';
     }
@@ -71,12 +75,13 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     const fbc = localStorage.getItem('_fbc') || '';
 
     // Salva dados do lead localmente
+    localStorage.setItem('lead_nome', nome);
     localStorage.setItem('lead_email', email);
     localStorage.setItem('lead_whatsapp', whatsapp.replace(/\D/g, ''));
 
     const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
-      `Olá! Tenho interesse em adquirir meu cassino por R$ 997. Meu e-mail: ${email}`
+      `Olá! Meu nome é ${nome} e tenho interesse em adquirir meu cassino por R$ 997.`
     );
 
     const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
@@ -92,9 +97,8 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nome: email.split('@')[0],
-        telefone: whatsapp.replace(/\D/g, ''),
-        email: email,
+        nome: nome.trim(),
+        telefone: whatsapp,
         fbc_value: fbc,
       }),
     })
@@ -161,6 +165,30 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
 
                 {/* Formulário */}
                 <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                  {/* Nome */}
+                  <div>
+                    <label htmlFor="popup-nome" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
+                      Nome
+                    </label>
+                    <input
+                      id="popup-nome"
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Seu nome"
+                      value={nome}
+                      onChange={(e) => {
+                        setNome(e.target.value);
+                        if (errors.nome) setErrors((prev) => ({ ...prev, nome: undefined }));
+                      }}
+                      className={`w-full rounded-xl bg-black/50 border ${
+                        errors.nome ? 'border-red-500/60' : 'border-white/10 focus:border-yellow-400/50'
+                      } text-white placeholder-gray-600 px-4 py-3 text-sm outline-none transition-colors duration-200 focus:ring-1 focus:ring-yellow-400/30`}
+                    />
+                    {errors.nome && (
+                      <p className="mt-1 text-xs text-red-400">{errors.nome}</p>
+                    )}
+                  </div>
+
                   {/* E-mail */}
                   <div>
                     <label htmlFor="popup-email" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
