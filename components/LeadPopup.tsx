@@ -66,6 +66,8 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     if (typeof (window as any).fbq === 'function') {
       (window as any).fbq('track', 'Lead', {
         content_name: 'Popup CTA - R$ 997',
+        value: 997.00,
+        currency: 'BRL',
         em: email,
         ph: whatsapp.replace(/\D/g, ''),
       });
