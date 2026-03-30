@@ -65,8 +65,8 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     // Dispara evento de Lead no Facebook Pixel
     if (typeof (window as any).fbq === 'function') {
       (window as any).fbq('track', 'Lead', {
-        content_name: 'Popup CTA - R$ 997',
-        value: 997.00,
+        content_name: 'Popup CTA - R$ 499',
+        value: 499.00,
         currency: 'BRL',
         em: email,
         ph: whatsapp.replace(/\D/g, ''),
@@ -83,7 +83,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
 
     const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
-      `Olá! Meu nome é ${nome} e tenho interesse em adquirir meu cassino por R$ 997.`
+      `Olá! Meu nome é ${nome} e tenho interesse em adquirir meu cassino por R$ 499.`
     );
 
     const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
@@ -160,7 +160,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
                 {/* Headline */}
                 <h2 className="text-white text-2xl font-bold tracking-tight leading-tight mb-2">
                   Você está pronto para adquirir seu cassino por apenas{' '}
-                  <span className="text-yellow-400">R$ 997?</span>
+                  <span className="text-yellow-400">R$ 499?</span>
                 </h2>
                 <p className="text-gray-400 text-sm leading-relaxed mb-7">
                   Preencha abaixo e um consultor especializado entrará em contato agora pelo WhatsApp.

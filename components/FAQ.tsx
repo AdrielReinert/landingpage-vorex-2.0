@@ -14,7 +14,7 @@ const faqs: FAQItem[] = [
     a: "Com certeza! Essa é a nossa principal vantagem. Nós cuidamos de toda a parte chata e difícil. Você recebe tudo pronto e só precisa usar o celular para acompanhar."
   },
   {
-    q: "O valor de R$ 997 é mensal?",
+    q: "O valor de R$ 499 é mensal?",
     a: "Não! É um pagamento único. Você paga uma vez para a gente montar sua estrutura e nunca mais paga aluguel do sistema para a Vorex."
   },
   {

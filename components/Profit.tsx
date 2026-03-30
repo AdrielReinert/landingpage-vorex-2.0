@@ -33,7 +33,7 @@ const Profit: React.FC<ProfitProps> = ({ onOpenPopup }) => {
                       Oferta Limitada
                    </div>
                    <div className="flex items-baseline gap-2 mb-2">
-                     <span className="text-6xl font-semibold text-white tracking-tighter">R$ 997,00</span>
+                     <span className="text-6xl font-semibold text-white tracking-tighter">R$ 499,00</span>
                    </div>
                    
                    <p className="border-t border-white/10 pt-6 font-medium leading-relaxed text-gray-300">
