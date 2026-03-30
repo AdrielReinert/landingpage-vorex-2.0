@@ -70,21 +70,40 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     // Pega o _fbc salvo pelo script de rastreamento
     const fbc = localStorage.getItem('_fbc') || '';
 
-    // Salva dados do lead localmente para uso futuro/webhook
+    // Salva dados do lead localmente
     localStorage.setItem('lead_email', email);
     localStorage.setItem('lead_whatsapp', whatsapp.replace(/\D/g, ''));
-    if (fbc) localStorage.setItem('_fbc', fbc);
 
     const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
       `Olá! Tenho interesse em adquirir meu cassino por R$ 997. Meu e-mail: ${email}`
     );
 
-    setTimeout(() => {
+    const webhookUrl = 'COLE_AQUI_A_URL_DO_SEU_LOVABLE';
+
+    const irParaWhatsApp = () => {
       window.open(`https://wa.me/${numeroWhatsapp}?text=${mensagem}`, '_blank', 'noopener,noreferrer');
       setLoading(false);
       onClose();
-    }, 400);
+    };
+
+    // Envia dados para o webhook e depois redireciona para WhatsApp
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: email.split('@')[0],
+        telefone: whatsapp.replace(/\D/g, ''),
+        email: email,
+        fbc_value: fbc,
+      }),
+    })
+      .then(irParaWhatsApp)
+      .catch((error) => {
+        console.error('Erro ao enviar lead:', error);
+        // Mesmo em caso de erro no webhook, redireciona para WhatsApp
+        irParaWhatsApp();
+      });
   };
 
   return (
