@@ -9,16 +9,20 @@ import PlatformPreview from './components/PlatformPreview';
 import NetworkingGroup from './components/NetworkingGroup';
 import Concept from './components/Concept';
 import Products from './components/Products';
+import DashboardFeature from './components/DashboardFeature';
 import Profit from './components/Profit';
 import MembersArea from './components/MembersArea';
 import TargetAudience from './components/TargetAudience';
 import AboutUs from './components/AboutUs';
+import OnboardingForm from './components/OnboardingForm';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
+import LeadPopup from './components/LeadPopup';
 
 const App: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLeadPopupOpen, setIsLeadPopupOpen] = useState(false);
 
   useEffect(() => {
     // ── Lenis + GSAP ScrollTrigger integration ──────────────────────────────
@@ -105,16 +109,19 @@ const App: React.FC = () => {
         <Products />
         <Concept />
         <PlatformPreview />
+        <DashboardFeature />
         <MembersArea />
         <NetworkingGroup />
         <TargetAudience />
         <AboutUs />
-        <Profit />
+        <Profit onOpenPopup={() => setIsLeadPopupOpen(true)} />
+        <OnboardingForm />
         <FAQ />
       </main>
       
       <Footer />
       <BackToTop />
+      <LeadPopup isOpen={isLeadPopupOpen} onClose={() => setIsLeadPopupOpen(false)} />
     </div>
   );
 };

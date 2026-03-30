@@ -3,7 +3,11 @@ import { ArrowRight } from 'lucide-react';
 import { AppleSection } from './AppleSection';
 import { TextReveal } from './TextReveal';
 
-const Profit: React.FC = () => {
+interface ProfitProps {
+  onOpenPopup: () => void;
+}
+
+const Profit: React.FC<ProfitProps> = ({ onOpenPopup }) => {
   return (
     <section id="profit" className="py-20 md:py-32 relative overflow-hidden bg-black">
       
@@ -68,15 +72,13 @@ const Profit: React.FC = () => {
 
         <div className="mt-10 flex justify-center md:mt-14">
           <div className="flex w-full flex-col items-center sm:w-auto">
-            <a
-              href="https://wa.me/5547988700032?text=Quero%20montar%20meu%20cassino"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={onOpenPopup}
               className="group relative inline-flex min-h-14 w-full items-center justify-center overflow-hidden rounded-full border border-yellow-300/50 bg-gradient-to-b from-yellow-400 to-yellow-600 px-8 py-3 text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] sm:w-auto"
             >
               <span className="mr-2 text-lg font-bold">Falar com o consultor</span>
               <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
-            </a>
+            </button>
 
             <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-zinc-900/80 px-3 py-1 text-sm font-medium text-gray-300 ring-1 ring-white/5 backdrop-blur-sm">
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
