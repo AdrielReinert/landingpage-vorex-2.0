@@ -83,7 +83,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
 
     const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
-      `Olá! Meu nome é ${nome} e tenho interesse em adquirir meu cassino por R$ 499.`
+      `Olá! Meu nome é ${nome.trim()} e tenho interesse em adquirir meu cassino.`
     );
 
     const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
