@@ -103,6 +103,15 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
       fbc_value: fbc,
     });
 
+    // Redireciona imediatamente para evitar bloqueio por timeout/rede lenta.
+    const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!popup) {
+      window.location.href = whatsappUrl;
+    }
+
+    setLoading(false);
+    onClose();
+
     // Tenta enviar o lead em segundo plano sem bloquear o redirecionamento.
     let sentWithBeacon = false;
     if (typeof navigator.sendBeacon === 'function') {
@@ -129,14 +138,10 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
       }).finally(() => {
         isSubmittingRef.current = false;
       });
+      return;
     }
 
-    setLoading(false);
-    onClose();
     isSubmittingRef.current = false;
-
-    // Redireciona na mesma aba para evitar abertura dupla em navegadores móveis.
-    window.location.assign(whatsappUrl);
   };
 
   return (
