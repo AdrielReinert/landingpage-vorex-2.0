@@ -5,6 +5,8 @@ import { Activity, MousePointer, Users, Eye, ArrowLeft, ExternalLink, Map, PlayC
 const AnalyticsDashboard: React.FC = () => {
   const [clicks, setClicks] = useState<number>(0);
   const [visits, setVisits] = useState<number>(0);
+   const [leads, setLeads] = useState<number>(0);
+   const [webhookStatus, setWebhookStatus] = useState<string>('sem-envio');
   const [sessionTime, setSessionTime] = useState<number>(0);
 
   // Simulação de dados locais (já que não temos backend real conectado)
@@ -12,9 +14,13 @@ const AnalyticsDashboard: React.FC = () => {
     // Carregar dados simulados/locais
     const localClicks = parseInt(localStorage.getItem('vexus_clicks') || '0');
     const localVisits = parseInt(localStorage.getItem('vexus_visits') || '1');
+   const localLeads = parseInt(localStorage.getItem('vexus_leads') || '0');
+   const localWebhookStatus = localStorage.getItem('vexus_last_webhook_status') || 'sem-envio';
     
     setClicks(localClicks);
     setVisits(localVisits);
+   setLeads(localLeads);
+   setWebhookStatus(localWebhookStatus);
 
     // Timer da sessão atual
     const timer = setInterval(() => {
@@ -117,10 +123,23 @@ const AnalyticsDashboard: React.FC = () => {
           transition={{ delay: 0.3 }}
           className="bg-gradient-to-br from-yellow-600/20 to-purple-600/20 border border-yellow-500/30 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-center items-center text-center"
         >
-           <div className="font-semibold text-white mb-2">Status do Pixel</div>
-           <div className="flex items-center gap-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold border border-green-500/30">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              ATIVO
+           <div className="font-semibold text-white mb-1">Leads (Local)</div>
+           <div className="text-4xl font-mono font-bold text-white mb-3">{leads}</div>
+           <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border ${
+             webhookStatus === 'sent'
+               ? 'bg-green-500/20 text-green-400 border-green-500/30'
+               : webhookStatus === 'failed'
+               ? 'bg-red-500/20 text-red-400 border-red-500/30'
+               : 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
+           }`}>
+              <div className={`w-2 h-2 rounded-full ${
+                webhookStatus === 'sent'
+                  ? 'bg-green-500'
+                  : webhookStatus === 'failed'
+                  ? 'bg-red-500'
+                  : 'bg-yellow-400'
+              }`}></div>
+              Webhook: {webhookStatus}
            </div>
         </motion.div>
       </div>
