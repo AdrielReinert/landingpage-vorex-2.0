@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, MessageCircle } from 'lucide-react';
 
@@ -12,7 +12,6 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
-  const isSubmittingRef = useRef(false);
   const [errors, setErrors] = useState<{ nome?: string; email?: string; whatsapp?: string }>({});
 
   // Bloqueia scroll do body quando popup está aberto
@@ -59,10 +58,8 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmittingRef.current || loading) return;
     if (!validate()) return;
 
-    isSubmittingRef.current = true;
     setLoading(true);
 
     // Dispara evento de Lead no Facebook Pixel
@@ -83,10 +80,6 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     localStorage.setItem('lead_nome', nome);
     localStorage.setItem('lead_email', email);
     localStorage.setItem('lead_whatsapp', whatsapp.replace(/\D/g, ''));
-    const currentLeads = parseInt(localStorage.getItem('vexus_leads') || '0');
-    localStorage.setItem('vexus_leads', (currentLeads + 1).toString());
-    localStorage.setItem('vexus_last_lead_at', new Date().toISOString());
-    localStorage.setItem('vexus_last_webhook_status', 'pending');
 
     const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
@@ -105,7 +98,7 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
 
     // Redireciona imediatamente para evitar bloqueio por timeout/rede lenta.
     const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    if (!popup) {
+    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
       window.location.href = whatsappUrl;
     }
 
@@ -119,9 +112,6 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
         webhookUrl,
         new Blob([leadPayload], { type: 'application/json' })
       );
-      if (sentWithBeacon) {
-        localStorage.setItem('vexus_last_webhook_status', 'sent');
-      }
     }
 
     if (!sentWithBeacon) {
@@ -130,18 +120,10 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
         headers: { 'Content-Type': 'application/json' },
         body: leadPayload,
         keepalive: true,
-      }).then(() => {
-        localStorage.setItem('vexus_last_webhook_status', 'sent');
       }).catch((error) => {
-        localStorage.setItem('vexus_last_webhook_status', 'failed');
         console.error('Erro ao enviar lead:', error);
-      }).finally(() => {
-        isSubmittingRef.current = false;
       });
-      return;
     }
-
-    isSubmittingRef.current = false;
   };
 
   return (
