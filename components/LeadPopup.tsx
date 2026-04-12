@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, MessageCircle } from 'lucide-react';
+import { X, ArrowRight, MessageCircle, Copy, Check } from 'lucide-react';
 
 interface LeadPopupProps {
   isOpen: boolean;
@@ -8,11 +8,17 @@ interface LeadPopupProps {
 }
 
 const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
+  const consultorNumero = '5547988700032';
+  const consultorNumeroExibicao = '+55 (47) 98870-0032';
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState('');
   const [errors, setErrors] = useState<{ nome?: string; email?: string; whatsapp?: string }>({});
+  const fallbackTimerRef = useRef<number | null>(null);
 
   // Bloqueia scroll do body quando popup está aberto
   useEffect(() => {
@@ -32,6 +38,19 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowFallback(false);
+      setCopied(false);
+      setLoading(false);
+      setRedirectUrl('');
+      if (fallbackTimerRef.current !== null) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+    }
+  }, [isOpen]);
 
   const formatWhatsapp = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 11);
@@ -61,6 +80,8 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     if (!validate()) return;
 
     setLoading(true);
+    setShowFallback(false);
+    setCopied(false);
 
     // Dispara evento de Lead no Facebook Pixel
     if (typeof (window as any).fbq === 'function') {
@@ -81,20 +102,26 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     localStorage.setItem('lead_email', email);
     localStorage.setItem('lead_whatsapp', whatsapp.replace(/\D/g, ''));
 
-    const numeroWhatsapp = '5547988700032';
     const mensagem = encodeURIComponent(
       `Olá! Meu nome é ${nome.trim()} e tenho interesse em adquirir meu cassino.`
     );
+    const whatsappUrl = `https://wa.me/${consultorNumero}?text=${mensagem}`;
+    setRedirectUrl(whatsappUrl);
 
     const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
 
-    const irParaWhatsApp = () => {
-      window.open(`https://wa.me/${numeroWhatsapp}?text=${mensagem}`, '_blank', 'noopener,noreferrer');
-      setLoading(false);
-      onClose();
-    };
+    // Tenta redirecionar imediatamente no clique do usuário.
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
-    // Envia dados para o webhook e depois redireciona para WhatsApp
+    if (fallbackTimerRef.current !== null) {
+      window.clearTimeout(fallbackTimerRef.current);
+    }
+    fallbackTimerRef.current = window.setTimeout(() => {
+      setShowFallback(true);
+      setLoading(false);
+    }, 3000);
+
+    // Envia dados para webhook sem bloquear o redirecionamento.
     fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -105,12 +132,24 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
         fbc_value: fbc,
       }),
     })
-      .then(irParaWhatsApp)
       .catch((error) => {
         console.error('Erro ao enviar lead:', error);
-        // Mesmo em caso de erro no webhook, redireciona para WhatsApp
-        irParaWhatsApp();
       });
+  };
+
+  const handleOpenWhatsAppFallback = () => {
+    if (!redirectUrl) return;
+    window.open(redirectUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCopyNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(consultorNumeroExibicao);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Erro ao copiar numero:', error);
+    }
   };
 
   return (
@@ -262,6 +301,35 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
                       </span>
                     )}
                   </button>
+
+                  {showFallback && (
+                    <div className="mt-3 rounded-2xl border border-yellow-400/30 bg-yellow-500/10 p-4 text-left">
+                      <p className="text-sm font-medium text-yellow-100">
+                        Caso você não tenha sido direcionado para o WhatsApp, clique no botão abaixo.
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={handleOpenWhatsAppFallback}
+                        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-yellow-300/50 bg-gradient-to-b from-yellow-400 to-yellow-600 px-5 py-2.5 text-sm font-bold text-black transition-all duration-300 hover:scale-[1.01]"
+                      >
+                        <MessageCircle size={16} />
+                        Abrir WhatsApp novamente
+                      </button>
+
+                      <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/40 px-3 py-2">
+                        <span className="text-sm text-gray-200">{consultorNumeroExibicao}</span>
+                        <button
+                          type="button"
+                          onClick={handleCopyNumber}
+                          className="inline-flex items-center gap-1 rounded-lg border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-gray-200 transition-colors hover:bg-white/10"
+                        >
+                          {copied ? <Check size={14} /> : <Copy size={14} />}
+                          {copied ? 'Copiado' : 'Copiar'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </form>
 
                 <p className="mt-4 text-center text-xs text-gray-600">
