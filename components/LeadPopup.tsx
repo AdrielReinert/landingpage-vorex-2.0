@@ -85,32 +85,45 @@ const LeadPopup: React.FC<LeadPopupProps> = ({ isOpen, onClose }) => {
     const mensagem = encodeURIComponent(
       `Olá! Meu nome é ${nome.trim()} e tenho interesse em adquirir meu cassino.`
     );
+    const whatsappUrl = `https://wa.me/${numeroWhatsapp}?text=${mensagem}`;
 
     const webhookUrl = 'https://pqsmtdtppvktuudimjia.supabase.co/functions/v1/lead-receiver';
 
-    const irParaWhatsApp = () => {
-      window.open(`https://wa.me/${numeroWhatsapp}?text=${mensagem}`, '_blank', 'noopener,noreferrer');
-      setLoading(false);
-      onClose();
-    };
+    const leadPayload = JSON.stringify({
+      nome: nome.trim(),
+      telefone: whatsapp.replace(/\D/g, ''),
+      email: email.trim(),
+      fbc_value: fbc,
+    });
 
-    // Envia dados para o webhook e depois redireciona para WhatsApp
-    fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome: nome.trim(),
-        telefone: whatsapp,
-        email: email.trim(),
-        fbc_value: fbc,
-      }),
-    })
-      .then(irParaWhatsApp)
-      .catch((error) => {
+    // Redireciona imediatamente para evitar bloqueio por timeout/rede lenta.
+    const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+      window.location.href = whatsappUrl;
+    }
+
+    setLoading(false);
+    onClose();
+
+    // Tenta enviar o lead em segundo plano sem bloquear o redirecionamento.
+    let sentWithBeacon = false;
+    if (typeof navigator.sendBeacon === 'function') {
+      sentWithBeacon = navigator.sendBeacon(
+        webhookUrl,
+        new Blob([leadPayload], { type: 'application/json' })
+      );
+    }
+
+    if (!sentWithBeacon) {
+      void fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: leadPayload,
+        keepalive: true,
+      }).catch((error) => {
         console.error('Erro ao enviar lead:', error);
-        // Mesmo em caso de erro no webhook, redireciona para WhatsApp
-        irParaWhatsApp();
       });
+    }
   };
 
   return (
