@@ -201,6 +201,7 @@ const QuizFlow: React.FC = () => {
   const [showOptions, setShowOptions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
+  const isRedirectingRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -264,6 +265,18 @@ const QuizFlow: React.FC = () => {
   };
 
   const handleWhatsAppRedirect = () => {
+    if (isRedirectingRef.current) return;
+    isRedirectingRef.current = true;
+
+    const now = Date.now();
+    const lastLeadTs = parseInt(localStorage.getItem('vexus_last_lead_click_ts') || '0');
+    if (now - lastLeadTs >= 2500) {
+      const currentLeads = parseInt(localStorage.getItem('vexus_leads') || '0');
+      localStorage.setItem('vexus_leads', (currentLeads + 1).toString());
+      localStorage.setItem('vexus_last_lead_at', new Date(now).toISOString());
+      localStorage.setItem('vexus_last_lead_click_ts', now.toString());
+    }
+
     setIsTyping(true);
     setTimeout(() => {
       setMessages(prev => [...prev, { 
@@ -275,7 +288,7 @@ const QuizFlow: React.FC = () => {
       setIsTyping(false);
       
       setTimeout(() => {
-        window.location.href = "https://wa.me/5547988700032?text=Ol%C3%A1%2C%20quero%20montar%20meu%20cassino%20online%20com%20estrutura%20pronta.";
+        window.location.assign("https://wa.me/5547988700032?text=Ol%C3%A1%2C%20quero%20montar%20meu%20cassino%20online%20com%20estrutura%20pronta.");
       }, 1000);
     }, 600);
   };

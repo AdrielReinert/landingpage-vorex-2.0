@@ -16,11 +16,9 @@ import AboutUs from './components/AboutUs';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
-import LeadPopup from './components/LeadPopup';
 
 const App: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLeadPopupOpen, setIsLeadPopupOpen] = useState(false);
 
   useEffect(() => {
     // ── Lenis + GSAP ScrollTrigger integration ──────────────────────────────
@@ -69,6 +67,17 @@ const App: React.FC = () => {
       if (typeof (window as any).fbq === 'function') {
         (window as any).fbq('track', 'Lead');
       }
+
+      const now = Date.now();
+      const lastLeadTs = parseInt(localStorage.getItem('vexus_last_lead_click_ts') || '0');
+      if (now - lastLeadTs < 2500) {
+        return;
+      }
+
+      const currentLeads = parseInt(localStorage.getItem('vexus_leads') || '0');
+      localStorage.setItem('vexus_leads', (currentLeads + 1).toString());
+      localStorage.setItem('vexus_last_lead_at', new Date(now).toISOString());
+      localStorage.setItem('vexus_last_lead_click_ts', now.toString());
     };
     
     // Log visit
@@ -111,13 +120,12 @@ const App: React.FC = () => {
         <NetworkingGroup />
         <TargetAudience />
         <AboutUs />
-        <Profit onOpenPopup={() => setIsLeadPopupOpen(true)} />
+        <Profit />
         <FAQ />
       </main>
       
       <Footer />
       <BackToTop />
-      <LeadPopup isOpen={isLeadPopupOpen} onClose={() => setIsLeadPopupOpen(false)} />
     </div>
   );
 };
